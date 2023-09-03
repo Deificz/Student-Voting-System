@@ -2,8 +2,8 @@ import React from 'react'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Hero from './pages/Hero'
 import Option from './pages/Option'
-import Register from './pages/login pages/register'
-import Signin from './pages/login pages/signin'
+import Register from './pages/Register'
+import Signin from './pages/Signin'
 
 export default function Router() {
   const router = createBrowserRouter([
