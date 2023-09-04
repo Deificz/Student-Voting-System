@@ -5,7 +5,7 @@ export default function Option() {
   return (
     <>
     <Header/>
-    <div className='flex flex-col md:flex-row justify-evenly items-center h-full lg:h-[60vh] w-full 2xl:h-[70vh] '>
+    <div className='flex flex-col md:flex-row justify-evenly items-center h-full lg:h-[60vh] w-full 2xl:h-[70vh] mt-16 '>
         
         <div className='flex flex-col justify-center items-center h-[400px] 2xl:h-[600px] p-10 w-[80vw] lg:w-[30vw] border-4 border-solid border-color-blue rounded-[50px] shadow-card'>
             <h1 className='text-black font-bold text-center text-3xl 2xl:text-5xl'>Are you a student?</h1>
