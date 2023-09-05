@@ -1,25 +1,29 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
 export default function Nav({adminNav}) {
   return (
     <>
     {
         adminNav ? 
-            <div className='flex items-center justify-between'>
-                <div className='flex'>
-                    <h1 className='mr-10 font-semibold text-xl'>Home</h1>
-                    <h1 className='font-semibold text-xl'>Dashboard</h1>
-                </div>
-                <h1 className='mr-5 font-semibold text-xl'>Sign out</h1>
-            </div>
+            <nav>
+                <ul className='flex items-center justify-between'>
+                  <div className='flex'>
+                      <li className='mr-10 font-semibold text-xl 2xl:text-3xl'>Home</li>
+                      <li className='font-semibold text-xl 2xl:text-3xl'>Dashboard</li>
+                  </div>
+                  <li className='mr-5 font-semibold text-xl 2xl:text-3xl'>Sign out</li>
+                </ul>
+            </nav>
               :
-            <div className='flex items-center justify-between'>
-                <div className='flex'>
-                    <h1 className='mr-10 font-semibold text-xl'>Home</h1>
-                    <h1 className='font-semibold text-xl'>Vote</h1>
-                </div>
-                <h1 className='mr-5 font-semibold text-xl'>Sign out</h1>
-            </div>
+            <nav>
+                <ul className='flex items-center justify-between'>
+                  <div className='flex'>
+                      <Link to='/student'><li className='mr-10 font-semibold text-xl 2xl:text-3xl'>Home</li></Link>
+                      <li className='font-semibold text-xl 2xl:text-3xl'>Vote</li>
+                  </div>
+                  <li className='mr-5 font-semibold text-xl 2xl:text-3xl'>Sign out</li>
+                </ul>
+            </nav>
     }
     
     </>

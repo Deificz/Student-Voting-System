@@ -1,0 +1,17 @@
+
+#candidate-panel::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+#candidate-panel::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+#candidate-panel::-webkit-scrollbar-thumb {
+    background: #1a5fb4; 
+    border-radius: 50px;
+  }
+  
+#candidate-panel::-webkit-scrollbar-thumb:hover {
+    background: #1a5fb4a2; 
+  }
