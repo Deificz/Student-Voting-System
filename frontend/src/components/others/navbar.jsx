@@ -18,8 +18,8 @@ export default function Nav({adminNav}) {
             <nav>
                 <ul className='flex items-center justify-between'>
                   <div className='flex'>
-                      <Link to='/student'><li className='mr-10 font-semibold text-xl 2xl:text-3xl'>Home</li></Link>
-                      <li className='font-semibold text-xl 2xl:text-3xl'>Vote</li>
+                      <Link to='/home'><li className='mr-10 font-semibold text-xl 2xl:text-3xl'>Home</li></Link>
+                      <Link to='/vote'><li className='font-semibold text-xl 2xl:text-3xl'>Vote</li></Link>
                   </div>
                   <li className='mr-5 font-semibold text-xl 2xl:text-3xl'>Sign out</li>
                 </ul>

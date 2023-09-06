@@ -4,7 +4,8 @@ import Hero from './pages/Hero'
 import Option from './pages/Option'
 import Register from './pages/Register'
 import Signin from './pages/Signin'
-import StudentHome from './pages/Student View/StudentHome'
+import Home from './pages/Header View/Home'
+import Vote from './pages/Header View/Vote'
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -25,8 +26,12 @@ export default function Router() {
       element:<Register/>
     },
     {
-      path: "/student",
-      element: <StudentHome/>
+      path: "/home",
+      element: <Home/>
+    },
+    {
+      path: "/vote",
+      element: <Vote/>
     }
 ])
 
