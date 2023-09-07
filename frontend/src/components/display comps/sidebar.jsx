@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { SidebarContext } from '../../pages/Header View/Home'
+import { SidebarContext } from '../../utils/Contexts.jsx'
 
 export default function sidebar() {
-  const {setCurrentView} = useContext(SidebarContext);
+  const {setCurrentPosView} = useContext(SidebarContext);
 
   const handleClick = (e) => {
-    setCurrentView(e.target.textContent);
+    setCurrentPosView(e.target.textContent);
   }
 
   return (

@@ -7,7 +7,8 @@ export default function Signin() {
   return (
     <>
     <Header/>
-    <div className='flex flex-col items-center h-fit mt-16'>
+    <div className='flex flex-col items-center h-fit mt-16 mb-16'>
+      <h1 className='mb-10 text-3xl md:text-5xl 2xl:text-6xl text-color-blue font-bold'>Sign In</h1>
       <form action="" className='flex flex-col  justify-evenly items w-[80dvw] md:w-[35dvw] md:h-[60dvh] h-fit  border-color-blue border-4 p-6 md:p-10 2xl:p-14 rounded-xl shadow-card'>
         <Email/>
         <Password/>

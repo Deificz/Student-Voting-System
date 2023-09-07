@@ -1,11 +1,14 @@
 import React from 'react'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import Hero from './pages/Hero'
-import Option from './pages/Option'
-import Register from './pages/Register'
-import Signin from './pages/Signin'
-import Home from './pages/Header View/Home'
-import Vote from './pages/Header View/Vote'
+import Hero from '../pages/Hero'
+import Option from '../pages/Option'
+import Register from '../pages/Register'
+import Signin from '../pages/Signin'
+import Home from '../pages/Header View/Home'
+import Vote from '../pages/Header View/Vote'
+
+import Dashboard from '../pages/Header View/Dashboard'
+
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -32,13 +35,18 @@ export default function Router() {
     {
       path: "/vote",
       element: <Vote/>
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard/>
     }
 ])
+
+
 
   return (
     <>
         <RouterProvider router={router}/>
-            
     </>
   )
 }

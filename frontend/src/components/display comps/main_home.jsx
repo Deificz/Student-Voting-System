@@ -1,13 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContex,useContext } from 'react'
 import '../../../styles/custom.css'
-import { SidebarContext } from '../../pages/Header View/Home'
+import { SidebarContext } from '../../utils/Contexts.jsx'
+import { UserViewContext } from '../../utils/Contexts.jsx';
 
-export default function main() {
-  const {currentView} = useContext(SidebarContext);
-
+export default function main_home() {
+  const {currentPosView} = useContext(SidebarContext);
+  const {isAdmin} = useContext(UserViewContext);
+  
   return (
    <>
-   {currentView === 'President' ? 
+   {currentPosView === 'President' ? 
 
    <div className='w-[100dvw] h-[100dvh] flex flex-col'>
         <h1 className='text-3xl 2xl:text-4xl mt-10 text-center'>President</h1>
@@ -24,7 +26,7 @@ export default function main() {
         </div>
     </div> 
 
-    : currentView === 'Vice President' ? 
+    : currentPosView === 'Vice President' ? 
     <div className='w-[100dvw] h-[100dvh] flex flex-col'>
         <h1 className='text-3xl 2xl:text-4xl mt-10 text-center'>Vice President</h1>
         <div id='candidate-panel' className='md:border-t-2 border-color-blue m-5 md:grid md:grid-cols-3 md:overflow-y-auto'>
@@ -39,7 +41,7 @@ export default function main() {
     </div>
     </div> 
     
-    : ''}
+    : <h1>Secretary</h1>}
    </>
     
   )
