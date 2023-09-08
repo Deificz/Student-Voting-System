@@ -1,15 +1,15 @@
 import React from 'react'
 import { useState } from 'react';
-export default function Password() {
+export default function Password({setPassword}) {
   const [isEmpty, setIsEmpty] = useState(true);
 
   const handleInput = (e) => {
-      if(e.target.value){
+      if(e.target.value)
         setIsEmpty(false);
-      }
-      else{
+      else
         setIsEmpty(true);
-      }
+      
+      setPassword(e.target.value)
   }
 
   return (

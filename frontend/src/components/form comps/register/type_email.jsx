@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-function Email() {
+export default function Email({setEmail}) {
   const [isEmpty, setIsEmpty] = useState(true);
 
   const handleInput = (e) => {
-      if(e.target.value){
+      if(e.target.value)
         setIsEmpty(false);
-      }
-      else{
+      else
         setIsEmpty(true);
-      }
+      setEmail(e.target.value)
   }
+  
 
   return (
     <div className='flex flex-col mb-3 col-start-2 row-start-2 md:text-lg 2xl:text-2xl'>
@@ -22,4 +22,3 @@ function Email() {
   )
 }
 
-export default Email
