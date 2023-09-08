@@ -1,11 +1,30 @@
 import { useState } from 'react'
+import Router from './utils/Router'
+import { SidebarContext } from './utils/Contexts'
+import { UserViewContext } from './utils/Contexts';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPosView, setCurrentPosView] = useState('President');
+  const [isAdmin, setisAdmin] = useState(true);
+  
+  const posViewValues = {
+    currentPosView,
+    setCurrentPosView,
+  };
 
+  const userViewValues = {
+    isAdmin,
+    setisAdmin,
+  }
+  
   return (
     <>
-    <h1 className='text-blue-400'>test</h1>
+    <UserViewContext.Provider value = {userViewValues}>
+      <SidebarContext.Provider value={posViewValues}>
+        <Router/>
+      </SidebarContext.Provider>
+    </UserViewContext.Provider>
+    
     </>
   )
 }
