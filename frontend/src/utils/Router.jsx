@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Hero from '../pages/Hero'
 import Option from '../pages/Option'
@@ -6,10 +6,13 @@ import Register from '../pages/Register'
 import Signin from '../pages/Signin'
 import Home from '../pages/Header View/Home'
 import Vote from '../pages/Header View/Vote'
+import { UserViewContext } from '../utils/Contexts.jsx';
+
 
 import Dashboard from '../pages/Header View/Dashboard'
 
 export default function Router() {
+  const {isAdmin} = useContext(UserViewContext);
   const router = createBrowserRouter([
     {
         path: "/",
@@ -30,7 +33,12 @@ export default function Router() {
     },
     {
       path: "/home",
-      element: <Home/>
+      element: <Home/>,
+      children: [
+        { path: "president", element: <Home /> },
+        { path: "vice", element: <Home /> },
+        { path: "sec", element: <Home /> },
+      ],
     },
     {
       path: "/vote",

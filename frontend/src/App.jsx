@@ -5,7 +5,7 @@ import { UserViewContext } from './utils/Contexts';
 
 function App() {
   const [currentPosView, setCurrentPosView] = useState('President');
-  const [isAdmin, setisAdmin] = useState(true);
+  const [isAdmin, setisAdmin] = useState(false);
   
   const posViewValues = {
     currentPosView,
