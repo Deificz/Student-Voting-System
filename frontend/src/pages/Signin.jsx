@@ -3,7 +3,6 @@ import Header from '../components/Header'
 import Email from '../components/form comps/signin/Email'
 import Password from '../components/form comps/signin/Password'
 import {Link, useNavigate} from 'react-router-dom'
-import { UserDataContext } from '../utils/Contexts'
 import { useAuth } from '../utils/Auth'
 export default function Signin() {
 

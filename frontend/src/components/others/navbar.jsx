@@ -1,6 +1,5 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import { UserViewContext } from '../../utils/Contexts'
 import { useContext } from 'react'
 import { useAuth } from '../../utils/Auth';
 export default function Nav() {

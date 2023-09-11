@@ -6,13 +6,12 @@ import Register from '../pages/Register'
 import Signin from '../pages/Signin'
 import Home from '../pages/Header View/Home'
 import Vote from '../pages/Header View/Vote'
-import { UserViewContext } from '../utils/Contexts.jsx';
 
 
 import Dashboard from '../pages/Header View/Dashboard'
 
 export default function Router() {
-  const {isAdmin} = useContext(UserViewContext);
+
   const router = createBrowserRouter([
     {
         path: "/",
