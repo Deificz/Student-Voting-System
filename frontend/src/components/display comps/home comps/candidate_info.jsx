@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function candidate_info({isAdmin, setShowMore, candidateID}) {
+export default function candidate_info({isAdmin, setShowMore}) {
 
   const goBack = () =>{
     setShowMore(false);

@@ -33,11 +33,6 @@ export default function Router() {
     {
       path: "/home",
       element: <Home/>,
-      children: [
-        { path: "president", element: <Home /> },
-        { path: "vice", element: <Home /> },
-        { path: "sec", element: <Home /> },
-      ],
     },
     {
       path: "/vote",

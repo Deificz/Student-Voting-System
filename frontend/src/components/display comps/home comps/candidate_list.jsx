@@ -1,7 +1,7 @@
 import React,{ useContext } from 'react'
 import { SidebarContext } from '../../../utils/Contexts.jsx'
 
-export default function candidate_list({isAdmin, setShowMore, setCandidateID}) {
+export default function candidate_list({isAdmin, setShowMore}) {
 
   const {currentPosView} = useContext(SidebarContext);
   

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   isAuthenticated: false,
 };
+
 
 function reducer(state, action) {
   switch (action.type) {
@@ -41,13 +42,17 @@ function AuthProvider({ children }) {
           password: password,
         }),
       });
+
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
         console.log("Login successful");
-        dispatch({ type: "login", payload: userData });
         setUserData(responseData);
-      } else console.log("Log in unsuccessfull");
+        dispatch({ type: "login", payload: userData });
+        localStorage.setItem('userData', JSON.stringify(responseData));
+        localStorage.setItem('Auth', JSON.stringify(isAuthenticated));
+      } else console.log("Loggin in is aborted");
+
     } catch (error) {
       console.log(error);
     }
@@ -83,14 +88,31 @@ function AuthProvider({ children }) {
         setUserData(responseData);
         dispatch({ type: "signup", payload: userData });
         setHasRegisteredSuccessfully(true);
-      } else console.log("Register is unsuccessfull");
+      } else console.log("Registration is aborted");
     } catch (error) {
       console.log(error);
     }
   }
 
-  function logout() {
+  async function logout() {
     dispatch({ type: "logout" });
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/signout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        dispatch({ type: "logout"});
+        console.log('Signed out');
+        localStorage.removeItem('userData');
+      } else console.log("Signing out is aborted");
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

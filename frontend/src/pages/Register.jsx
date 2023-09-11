@@ -26,15 +26,7 @@ export default function Register() {
     e.preventDefault();
     signup(studentNum, email, firstName, lastName, middleName, password);
   };
-  // useEffect(
-  //   function () {
-  //     if (hasRegisteredSuccessfully) {
-  //       navigate("/signin", { replace: true });
-  //     setHasRegisteredSuccessfully(false);
 
-  //     }
-  //   }[hasRegisteredSuccessfully]
-  // );
   useEffect(() => {
     if (hasRegisteredSuccessfully) {
       navigate("/signin", { replace: true });

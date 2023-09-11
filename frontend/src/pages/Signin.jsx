@@ -11,33 +11,11 @@ export default function Signin() {
   const navigate = useNavigate();
   const{ login, isAuthenticated} = useAuth();
 
-
   const handleSubmit =  async (e) =>{
     e.preventDefault()
-    // try {
-    //   const response = await fetch("http://localhost:8080/api/auth/signin", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       email: email,
-    //       password: password,
-    //     }),
-    //   });
-    //   if (response.ok) {
-    //     const responseData = await response.json();
-    //     console.log(responseData);
-    //     console.log("Login successful");
-    //     setIsLoggedIn(true);
-    //     setUserData(responseData)
-    //     navigate("/home");
-    //   } else console.log("Log in unsuccessfull");
-    // } catch (error) {
-    //   console.log(error);
-    // }
     login(email, password);
   };
+  
   useEffect(
     function () {
       if (isAuthenticated) navigate("/home", { replace: true });
