@@ -23,6 +23,7 @@ function reducer(state, action) {
 
 function AuthProvider({ children }) {
   const [userData, setUserData] = useState({});
+  const [errorLog, setErrorLog] = useState(false);
   const [hasRegisteredSuccessfully, setHasRegisteredSuccessfully] =
     useState(false);
   const [{ user, isAuthenticated }, dispatch] = useReducer(
@@ -51,7 +52,8 @@ function AuthProvider({ children }) {
         dispatch({ type: "login", payload: userData });
         localStorage.setItem('userData', JSON.stringify(responseData));
         localStorage.setItem('Auth', JSON.stringify(isAuthenticated));
-      } else console.log("Loggin in is aborted");
+        setErrorLog(false)
+      } else setErrorLog(true);
 
     } catch (error) {
       console.log(error);
@@ -119,6 +121,7 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         userData,
+        errorLog,
         isAuthenticated,
         login,
         logout,

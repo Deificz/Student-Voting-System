@@ -9,12 +9,21 @@ export default function Signin() {
   const [email, setEmail] = useState('');
   const [password,setPassword] = useState('');
   const navigate = useNavigate();
-  const{ login, isAuthenticated} = useAuth();
-
+  const{ login, isAuthenticated, errorLog} = useAuth();
+  const [isError, setIsError] = useState(false);
+  
   const handleSubmit =  async (e) =>{
     e.preventDefault()
     login(email, password);
   };
+  
+  useEffect(() =>{
+    if(errorLog){
+      setIsError(true);
+    }else{
+      setIsError(false);
+    }
+  },[errorLog]);
   
   useEffect(
     function () {
@@ -25,12 +34,13 @@ export default function Signin() {
   return (
     <>
     <Header/>
-    <div className='flex flex-col items-center h-fit mt-16 mb-16'>
-      <h1 className='mb-10 text-3xl md:text-5xl 2xl:text-6xl text-color-blue font-bold'>Sign In</h1>
-      <form action="" onSubmit={handleSubmit} className='flex flex-col items-center  justify-evenly items w-[80dvw] md:w-[35dvw] md:h-[60dvh] h-fit  border-color-blue border-4 p-6 md:p-10 2xl:p-14 rounded-xl shadow-card'>
+    <div className='flex flex-col items-center mt-16 mb-16 h-fit'>
+      <h1 className='mb-10 text-3xl font-bold md:text-5xl 2xl:text-6xl text-color-blue'>Sign In</h1>
+      <form action="" onSubmit={handleSubmit} className='flex flex-col items-center  justify-evenly items w-fit md:h-[60dvh] h-fit  border-color-blue border-4 p-6 md:p-10 2xl:p-14 rounded-xl shadow-card'>
         <Email setEmail = {setEmail}/>
         <Password setPassword = {setPassword}/>
-       <button className='bg-color-blue px-16 py-5 mt-5 text-xl 2xl:p-8 2xl:text-3xl shadow-button text-white font-semibold rounded-lg hover:bg-white hover:text-color-blue border-color-blue border-2 transition-all duration-300 col-start-2 row-start-6'>Sign-in</button>
+        <h1 className={`text-color-red ${isError ? 'visible' : 'invisible'}`}>User doesn't exist. Please try again!</h1>
+       <button className='col-start-2 row-start-6 px-16 py-5 mt-5 text-xl font-semibold text-white transition-all duration-300 border-2 rounded-lg bg-color-blue 2xl:p-8 2xl:text-3xl shadow-button hover:bg-white hover:text-color-blue border-color-blue'>Sign-in</button>
       </form>
     </div>
     </>
