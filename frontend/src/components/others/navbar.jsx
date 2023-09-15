@@ -49,7 +49,7 @@ export default function Nav() {
                           ${isOpen ? 'max-[700px]:right-[0px]' : 'max-[700px]:right-[-150px]'}`} onClick={handleNav}>
             <i className="mr-3 text-3xl cursor-pointer fa-regular fa-circle-xmark md:hidden justify-self-end"></i>
             <div className='flex flex-col md:flex-row '>
-                <Link to='/home'><li className='mr-10 font-semibold text-xl 2xl:text-3xl max-[700px]:mb-5'>Home</li></Link>
+                <Link to='/home/candidates'><li className='mr-10 font-semibold text-xl 2xl:text-3xl max-[700px]:mb-5'>Home</li></Link>
                 {isAdmin ?
                 <Link to='/dashboard'><li className='text-xl font-semibold 2xl:text-3xl'>Dashboard</li></Link>
                           :

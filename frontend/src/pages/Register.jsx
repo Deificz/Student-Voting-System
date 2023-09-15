@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Text from "../components/form comps/register/type_text";
 import Password from "../components/form comps/register/type_password";
 import Email from "../components/form comps/register/type_email";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/Auth";
 
 export default function Register() {
@@ -15,9 +15,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const {
     signup,
-    isAuthenticated,
-    hasRegisteredSuccessfully,
-    setHasRegisteredSuccessfully,
+    isRegistered,
   } = useAuth();
 
   const navigate = useNavigate();
@@ -28,11 +26,10 @@ export default function Register() {
   };
 
   useEffect(() => {
-    if (hasRegisteredSuccessfully) {
+    if (isRegistered) {
       navigate("/signin", { replace: true });
-      setHasRegisteredSuccessfully(false);
     }
-  }, [hasRegisteredSuccessfully]);
+  }, [isRegistered]);
   return (
     <>
       <Header />

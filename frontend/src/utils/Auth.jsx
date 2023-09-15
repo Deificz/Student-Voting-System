@@ -5,28 +5,35 @@ const AuthContext = createContext();
 const initialState = {
   user: null,
   isAuthenticated: false,
+  login_error: false,
+  isRegistered: false,
 };
 
+const ACTIONS = {
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  REGISTER: 'register',
+  LOGIN_ERROR: 'login_error'
+}
 
 function reducer(state, action) {
   switch (action.type) {
-    case "login":
-      return { ...state, user: action.payload, isAuthenticated: true };
-    case "logout":
+    case ACTIONS.LOGIN:
+      return { ...state, user: action.payload, isAuthenticated: true, login_error:false};
+    case ACTIONS.LOGOUT:
       return { ...state, user: null, isAuthenticated: false };
-    case "signup":
-      return { ...state, user: action.payload, isAuthenticated: false };
+    case ACTIONS.REGISTER:
+      return { ...state, user: action.payload, isAuthenticated: false, isRegistered:true };
+    case ACTIONS.LOGIN_ERROR:
+      return {...state, login_error: true}
     default:
       throw new Error("Unknown action");
   }
 }
 
 function AuthProvider({ children }) {
-  const [userData, setUserData] = useState({});
-  const [errorLog, setErrorLog] = useState(false);
-  const [hasRegisteredSuccessfully, setHasRegisteredSuccessfully] =
-    useState(false);
-  const [{ user, isAuthenticated }, dispatch] = useReducer(
+  
+  const [{ user, isAuthenticated, login_error, isRegistered }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -48,15 +55,13 @@ function AuthProvider({ children }) {
         const responseData = await response.json();
         console.log(responseData);
         console.log("Login successful");
-        setUserData(responseData);
-        dispatch({ type: "login", payload: userData });
+        dispatch({ type: ACTIONS.LOGIN, payload: responseData});
         localStorage.setItem('userData', JSON.stringify(responseData));
         localStorage.setItem('Auth', JSON.stringify(isAuthenticated));
-        setErrorLog(false)
-      } else setErrorLog(true);
+      } else  dispatch({type: ACTIONS.LOGIN_ERROR})
 
-    } catch (error) {
-      console.log(error);
+    } catch {
+      dispatch({type: ACTIONS.LOGIN_ERROR})
     }
   }
 
@@ -87,12 +92,10 @@ function AuthProvider({ children }) {
         const responseData = await response.json();
         console.log(responseData);
         console.log("Register successful");
-        setUserData(responseData);
-        dispatch({ type: "signup", payload: userData });
-        setHasRegisteredSuccessfully(true);
+        dispatch({ type: ACTIONS.REGISTER, payload: responseData });
       } else console.log("Registration is aborted");
-    } catch (error) {
-      console.log(error);
+    } catch {
+      console.log("Registration is aborted");
     }
   }
 
@@ -107,27 +110,25 @@ function AuthProvider({ children }) {
       });
 
       if (response.ok) {
-        dispatch({ type: "logout"});
         console.log('Signed out');
         localStorage.removeItem('userData');
       } else console.log("Signing out is aborted");
 
-    } catch (error) {
-      console.log(error);
+    } catch  {
+      console.log("Signing out is aborted");
     }
   }
 
   return (
     <AuthContext.Provider
       value={{
-        userData,
-        errorLog,
+        user,
+        login_error,
+        isRegistered,
         isAuthenticated,
         login,
         logout,
         signup,
-        hasRegisteredSuccessfully,
-        setHasRegisteredSuccessfully,
       }}
     >
       {children}

@@ -2,32 +2,23 @@ import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Email from '../components/form comps/signin/Email'
 import Password from '../components/form comps/signin/Password'
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { useAuth } from '../utils/Auth'
 export default function Signin() {
 
   const [email, setEmail] = useState('');
   const [password,setPassword] = useState('');
   const navigate = useNavigate();
-  const{ login, isAuthenticated, errorLog} = useAuth();
-  const [isError, setIsError] = useState(false);
-  
+  const{ login, isAuthenticated, login_error } = useAuth();
+
   const handleSubmit =  async (e) =>{
     e.preventDefault()
     login(email, password);
   };
-  
-  useEffect(() =>{
-    if(errorLog){
-      setIsError(true);
-    }else{
-      setIsError(false);
-    }
-  },[errorLog]);
-  
+
   useEffect(
     function () {
-      if (isAuthenticated) navigate("/home", { replace: true });
+      if (isAuthenticated) navigate("/home/candidates", { replace: true });
     },
     [isAuthenticated, navigate]
   );
@@ -39,7 +30,7 @@ export default function Signin() {
       <form action="" onSubmit={handleSubmit} className='flex flex-col items-center  justify-evenly items w-fit md:h-[60dvh] h-fit  border-color-blue border-4 p-6 md:p-10 2xl:p-14 rounded-xl shadow-card'>
         <Email setEmail = {setEmail}/>
         <Password setPassword = {setPassword}/>
-        <h1 className={`text-color-red ${isError ? 'visible' : 'invisible'}`}>User doesn't exist. Please try again!</h1>
+        <h1 className={`text-color-red ${login_error ? 'visible' : 'invisible'}`}>User doesn't exist. Please try again!</h1>
        <button className='col-start-2 row-start-6 px-16 py-5 mt-5 text-xl font-semibold text-white transition-all duration-300 border-2 rounded-lg bg-color-blue 2xl:p-8 2xl:text-3xl shadow-button hover:bg-white hover:text-color-blue border-color-blue'>Sign-in</button>
       </form>
     </div>
