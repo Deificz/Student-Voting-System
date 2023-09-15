@@ -6,7 +6,7 @@ import CandidateInfo from './home comps/candidate_info';
 
 export default function main_home() {
   const [showMore, setShowMore] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
   

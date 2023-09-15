@@ -3,6 +3,7 @@ import Router from "./utils/Router";
 import { SidebarContext } from "./utils/Contexts";
 
 import { AuthProvider, useAuth } from "./utils/Auth";
+import { CandidateProvider } from "./utils/Candidates";
 
 function App() {
   const [currentPosView, setCurrentPosView] = useState("President");
@@ -17,7 +18,9 @@ function App() {
       
         <SidebarContext.Provider value={posViewValues}>
             <AuthProvider>
-              <Router />
+              <CandidateProvider>
+                <Router />
+              </CandidateProvider>
             </AuthProvider>
         </SidebarContext.Provider>
       

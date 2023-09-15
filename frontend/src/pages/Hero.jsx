@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header'
 import {Link} from 'react-router-dom'
+import { useCandidates } from '../utils/Candidates'
+
 export default function Hero() {
   return (
     <>
