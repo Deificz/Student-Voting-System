@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useReducer, useState } from "react";
-
-const AuthContext = createContext();
+import { AuthContext } from "./Contexts";
 
 const initialState = {
   user: null,

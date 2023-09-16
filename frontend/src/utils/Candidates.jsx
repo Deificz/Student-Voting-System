@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
-
-const CandidateContext = createContext();
+import { CandidateContext } from "./Contexts";
 
 const initialState = {
   status: '',
