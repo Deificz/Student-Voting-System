@@ -56,7 +56,6 @@ function AuthProvider({ children }) {
         console.log("Login successful");
         dispatch({ type: ACTIONS.LOGIN, payload: responseData});
         localStorage.setItem('userData', JSON.stringify(responseData));
-        localStorage.setItem('Auth', JSON.stringify(isAuthenticated));
       } else  dispatch({type: ACTIONS.LOGIN_ERROR})
 
     } catch {
@@ -110,6 +109,7 @@ function AuthProvider({ children }) {
 
       if (response.ok) {
         console.log('Signed out');
+        localStorage.removeItem('userData');
         localStorage.removeItem('userData');
       } else console.log("Signing out is aborted");
 

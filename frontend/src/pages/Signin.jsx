@@ -14,11 +14,13 @@ export default function Signin() {
   const handleSubmit =  async (e) =>{
     e.preventDefault()
     login(email, password);
+    
   };
 
   useEffect(
     function () {
       if (isAuthenticated) navigate("/home/candidates", { replace: true });
+      localStorage.setItem('Auth', JSON.stringify(isAuthenticated));
     },
     [isAuthenticated, navigate]
   );
