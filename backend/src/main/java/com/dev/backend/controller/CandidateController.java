@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,35 +71,61 @@ public class CandidateController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/candidate/vote")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> vote(@Valid @RequestBody List<VoteRequest> voteRequest){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String email = userDetails.getUsername();
-            User user = userRepository.findByEmail(email).orElse(null);
-            if (user != null) {
-                if (user.isHasVoted()){
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse("User already voted!"));
-                }
-                for (VoteRequest voteRequest1 : voteRequest) {
-                    Optional<Candidate> candidate = candidateRepository.findById(voteRequest1.getCandidateId());
+//    @PostMapping("/candidate/vote")
+//    @PreAuthorize("hasRole('USER')")
+//    public ResponseEntity<?> vote(@Valid @RequestBody List<VoteRequest> voteRequest){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//            String email = userDetails.getUsername();
+//            User user = userRepository.findByEmail(email).orElse(null);
+//            if (user != null) {
+//                if (user.isHasVoted()){
+//                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse("User already voted!"));
+//                }
+//                for (VoteRequest voteRequest1 : voteRequest) {
+//                    Optional<Candidate> candidate = candidateRepository.findById(voteRequest1.getCandidateId());
+//
+//                    if (candidate.isPresent()) {
+//                        Vote vote = new Vote();
+//                        vote.setUser(user);
+//                        vote.setCandidate(candidate.get());
+//                        voteRepository.save(vote);
+//                    } else {
+//                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid candidate ID provided."));
+//                    }
+//                }
+//                user.setHasVoted(true);
+//                userRepository.save(user);
+//                return ResponseEntity.ok("Vote saved successfully.");
+//            }
+//        }
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated.");
+//    }
 
-                    if (candidate.isPresent()) {
-                        Vote vote = new Vote();
-                        vote.setUser(user);
-                        vote.setCandidate(candidate.get());
-                        voteRepository.save(vote);
-                    } else {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid candidate ID provided."));
-                    }
+    @PostMapping("/candidate/vote")
+    public ResponseEntity<?> vote(@Valid @RequestBody VoteRequest voteRequest){
+        Long userId = voteRequest.getUserId();
+        List<Long> candidateIds = voteRequest.getCandidateId();
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null){
+            if (user.isHasVoted())
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse("User already voted!"));
+            List<Vote> votes = new ArrayList<>();
+            for (Long candidateId : candidateIds) {
+                Optional<Candidate> candidateOptional = candidateRepository.findById(candidateId);
+                if (candidateOptional.isPresent()) {
+                    Candidate candidate = candidateOptional.get();
+                    Vote vote = new Vote();
+                    vote.setUser(user);
+                    vote.setCandidate(candidate);
+                    voteRepository.save(vote);
                 }
-                user.setHasVoted(true);
-                userRepository.save(user);
-                return ResponseEntity.ok("Vote saved successfully.");
             }
+            user.setHasVoted(true);
+            userRepository.save(user);
+            return ResponseEntity.ok(new MessageResponse("Vote saved successfully."));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("User not found!"));
     }
 }
