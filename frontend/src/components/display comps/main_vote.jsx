@@ -2,19 +2,27 @@ import React, { useEffect, useReducer } from 'react'
 import { useState } from 'react'
 import { useCandidates } from '../../utils/Candidates';
 import { useVoteUtil } from '../../utils/VoteUtil';
+import { useAuth } from '../../utils/Auth';
 
 const ACTIONS = {
-  SET_VOTE: 'set_vote'
+  SET_VOTE: 'set_vote',
+  SET_USER_ID: null,
 }
 
 const initialState = {
-  voteData: [],
+  voteData: {
+    userId: null,
+    candidateId:[],
+  },
 }
 
 const reducer = (state, action) => {
     switch(action.type){
       case ACTIONS.SET_VOTE:
-        return {...state, voteData: [...state.voteData, action.payload]}
+        return {...state, voteData:{...state.voteData, 
+                                    candidateId:[...state.voteData.candidateId,action.payload]}}
+      case ACTIONS.SET_USER_ID:
+        return {...state, voteData:{...state.voteData, userId: action.payload}}
       default:
         throw new Error('Action is unknown');
     };
@@ -22,35 +30,44 @@ const reducer = (state, action) => {
 
 export default function main_vote() {
     const {setVote} = useVoteUtil();
-    const {candidates,getCandidates,status} = useCandidates();
     const [{voteData},dispatch] = useReducer(reducer, initialState)
+
+    const user = JSON.parse(localStorage.getItem('userData'));
+    const {candidates,getCandidates,status} = useCandidates();
+    const [isOk, setIsOk] = useState(false);
+    
     const [president, setPresident] = useState({});
     const [vicePresident, setVicePresident] = useState({});
     const [secretary, setSecretary] = useState({});
     
     useEffect(() => {
       getCandidates();
-    },[])
-    
-    console.log(voteData);
-    
+      dispatch({type: ACTIONS.SET_USER_ID, payload: user.id});
+    },[]);
+
+    useEffect(() => {
+      setVote(voteData);
+      console.log(voteData);
+    },[isOk])
+
     const handlePresident = (e) => {
-      setPresident({"candidateId": Number(e.target.value)});
+      setPresident( Number(e.target.value));
     }
   
     const handleVicePresident = (e) => {
-      setVicePresident({"candidateId": Number(e.target.value)});
+      setVicePresident(Number(e.target.value));
     }
     const handleSecretary = (e) => {
-      setSecretary({"candidateId": Number(e.target.value)});
+      setSecretary(Number(e.target.value));
     }
-  
+    
+
     const handleSubmit = (e) => {
       e.preventDefault();
       dispatch({type: ACTIONS.SET_VOTE, payload: president});
       dispatch({type: ACTIONS.SET_VOTE, payload: vicePresident});
       dispatch({type: ACTIONS.SET_VOTE, payload: secretary});
-      setVote(voteData);
+      setIsOk(true);
     }
   
     return (
