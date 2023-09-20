@@ -111,6 +111,7 @@ function AuthProvider({ children }) {
         console.log('Signed out');
         localStorage.removeItem('userData');
         localStorage.removeItem('userData');
+        localStorage.setItem('Auth', false);
       } else console.log("Signing out is aborted");
 
     } catch  {
