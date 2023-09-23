@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useCandidates } from "../../utils/Candidates";
 import { Link } from "react-router-dom";
 export default function list_comp({ position }) {
-  const { candidates, getCandidates, status } = useCandidates();
+  const {getCandidates, status } = useCandidates();
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [candidates, setCandidates] = useState(JSON.parse(localStorage.getItem("Candidates")));
   useEffect(() => {
     getCandidates();
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [role] = userData.roles;
     const boolAdmin = role === "ROLE_ADMIN";
+   
     setIsAdmin(boolAdmin);
-    console.log(boolAdmin);
   }, []);
 
   return (

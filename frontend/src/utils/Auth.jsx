@@ -9,40 +9,33 @@ const initialState = {
 };
 
 const ACTIONS = {
-  LOGIN: "login",
-  LOGOUT: "logout",
-  REGISTER: "register",
-  LOGIN_ERROR: "login_error",
-};
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  REGISTER: 'register',
+  LOGIN_ERROR: 'login_error'
+}
 
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.LOGIN:
-      return {
-        ...state,
-        user: action.payload,
-        isAuthenticated: true,
-        login_error: false,
-      };
+      return { ...state, user: action.payload, isAuthenticated: true, login_error:false};
     case ACTIONS.LOGOUT:
       return { ...state, user: null, isAuthenticated: false };
     case ACTIONS.REGISTER:
-      return {
-        ...state,
-        user: action.payload,
-        isAuthenticated: false,
-        isRegistered: true,
-      };
+      return { ...state, user: action.payload, isAuthenticated: false, isRegistered:true };
     case ACTIONS.LOGIN_ERROR:
-      return { ...state, login_error: true };
+      return {...state, login_error: true}
     default:
       throw new Error("Unknown action");
   }
 }
 
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated, login_error, isRegistered }, dispatch] =
-    useReducer(reducer, initialState);
+  
+  const [{ user, isAuthenticated, login_error, isRegistered }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   async function login(email, password) {
     try {
@@ -61,11 +54,12 @@ function AuthProvider({ children }) {
         const responseData = await response.json();
         console.log(responseData);
         console.log("Login successful");
-        dispatch({ type: ACTIONS.LOGIN, payload: responseData });
-        localStorage.setItem("userData", JSON.stringify(responseData));
-      } else dispatch({ type: ACTIONS.LOGIN_ERROR });
+        dispatch({ type: ACTIONS.LOGIN, payload: responseData});
+        localStorage.setItem('userData', JSON.stringify(responseData));
+      } else  dispatch({type: ACTIONS.LOGIN_ERROR})
+
     } catch {
-      dispatch({ type: ACTIONS.LOGIN_ERROR });
+      dispatch({type: ACTIONS.LOGIN_ERROR})
     }
   }
 
@@ -114,12 +108,13 @@ function AuthProvider({ children }) {
       });
 
       if (response.ok) {
-        console.log("Signed out");
-        localStorage.removeItem("userData");
-        localStorage.removeItem("userData");
-        localStorage.setItem("Auth", false);
+        console.log('Signed out');
+        localStorage.removeItem('userData');
+        localStorage.removeItem('userData');
+        localStorage.setItem('Auth', false);
       } else console.log("Signing out is aborted");
-    } catch {
+
+    } catch  {
       console.log("Signing out is aborted");
     }
   }

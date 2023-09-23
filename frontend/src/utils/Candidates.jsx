@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { useContext, useReducer } from "react";
 import { CandidateContext } from "./Contexts";
 
 const initialState = {
@@ -24,7 +18,7 @@ const ACTIONS = {
 const reducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.SET_LOADING:
-      return { ...state, status: action.payload };
+      return { ...state, status: action.payload } ;
     case ACTIONS.SET_ERROR:
       return { ...state, isError: true };
     case ACTIONS.LOAD_CANDIDATE:
@@ -47,6 +41,7 @@ export function CandidateProvider({ children }) {
       if (response.ok) {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
         const candidateData = await response.json();
+        localStorage.setItem("Candidates", JSON.stringify(candidateData));
         dispatch({ type: ACTIONS.LOAD_CANDIDATE, payload: candidateData });
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
       } else {
@@ -69,10 +64,8 @@ export function CandidateProvider({ children }) {
       if (response.ok) {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
         const candidateData = await response.json();
-        dispatch({
-          type: ACTIONS.SET_CURRENT_CANDIDATE,
-          payload: candidateData,
-        });
+        localStorage.setItem('currentCandidate', JSON.stringify(candidateData));
+        dispatch({type: ACTIONS.SET_CURRENT_CANDIDATE, payload: candidateData});
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
       } else {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Error" });

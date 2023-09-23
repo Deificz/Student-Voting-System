@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./others/navbar";
 import { Link } from "react-router-dom";
-
+import { useCandidates } from "../utils/Candidates";
 export default function Header({ showNavbar }) {
   const [Auth, setAuth] = useState(false);
+  const {getCandidates} = useCandidates();
 
   useEffect(() => {
     const initAuth = localStorage.getItem("Auth") === "true";
     setAuth(initAuth);
+    getCandidates();
   }, []);
 
   return (
