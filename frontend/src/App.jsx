@@ -13,20 +13,18 @@ function App() {
     currentPosView,
     setCurrentPosView,
   };
-  
+
   return (
     <>
-      
-        <SidebarContext.Provider value={posViewValues}>
-            <AuthProvider>
-              <CandidateProvider>
-                <VoteUtilProvider>
-                  <Router />
-                </VoteUtilProvider>
-              </CandidateProvider>
-            </AuthProvider>
-        </SidebarContext.Provider>
-      
+      <SidebarContext.Provider value={posViewValues}>
+        <AuthProvider>
+          <CandidateProvider>
+            <VoteUtilProvider>
+              <Router />
+            </VoteUtilProvider>
+          </CandidateProvider>
+        </AuthProvider>
+      </SidebarContext.Provider>
     </>
   );
 }

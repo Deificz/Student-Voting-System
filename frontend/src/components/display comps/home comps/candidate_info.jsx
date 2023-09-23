@@ -6,7 +6,7 @@ export default function candidate_info() {
 
   console.log(currentCandidate);
   const { id } = useParams();
-  
+
   useEffect(() => {
     getCandidateById(id);
   }, []);
@@ -20,7 +20,7 @@ export default function candidate_info() {
         >
           <Link
             to="/home/candidates"
-            className="self-end text-color-blue text-4xl md:text-6xl 2xl:text-8xl font-bold cursor-pointer mr-10"
+            className="self-end mr-10 text-4xl font-bold cursor-pointer text-color-blue md:text-6xl 2xl:text-8xl"
           >
             <i class="fa-solid fa-circle-arrow-left"> </i>
           </Link>
