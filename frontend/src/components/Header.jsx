@@ -10,7 +10,6 @@ export default function Header({showNavbar}) {
     setAuth(initAuth);
   },[])
 
-  console.log(Auth);
   return (
     <>
     <header className='p-5 shadow-xl grid items-center grid-cols-[7fr_1fr] md:grid-cols-[.8fr_1fr] sticky top-0 bg-white z-30'>
