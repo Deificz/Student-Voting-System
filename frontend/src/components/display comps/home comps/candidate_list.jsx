@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../../../utils/Contexts.jsx";
-import List from "../../others/list_comp.jsx";
+import CandidateCard from "./candidate_card.jsx";
 export default function candidate_list() {
   const { currentPosView } = useContext(SidebarContext);
 
   return (
     <>
       {currentPosView === "President" ? (
-        <List position="President" />
+        <CandidateCard position="President" />
       ) : currentPosView === "V. President" ? (
-        <List position="Vice President" />
+        <CandidateCard position="Vice President" />
       ) : currentPosView === "Secretary" ? (
-        <List position="Secretary" />
+        <CandidateCard position="Secretary" />
       ) : (
         ""
       )}

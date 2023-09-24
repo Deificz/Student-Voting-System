@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useCandidates } from "../../utils/Candidates";
+import { useCandidates } from "../../../utils/Candidates";
 import { Link } from "react-router-dom";
-export default function list_comp({ position }) {
+export default function candidate_card({ position }) {
   const {getCandidates, status } = useCandidates();
   const [isAdmin, setIsAdmin] = useState(false);
   const [candidates, setCandidates] = useState(JSON.parse(localStorage.getItem("Candidates")));
