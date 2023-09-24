@@ -16,7 +16,9 @@ public class Candidate {
     private String name;
 
     @NotBlank
-    private String partyList;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "partylist_id", referencedColumnName = "id")
+    private PartyList partylist;
 
     @NotBlank
     @Size(max = 10000)
@@ -37,10 +39,10 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, String partyList, String introduction, CandidateRole candidateRole) {
+    public Candidate(Long id, String name, PartyList partylist, String introduction, CandidateRole candidateRole) {
         this.id = id;
         this.name = name;
-        this.partyList = partyList;
+        this.partylist = partylist;
         this.introduction = introduction;
         this.candidateRole = candidateRole;
     }
@@ -61,12 +63,12 @@ public class Candidate {
         this.name = name;
     }
 
-    public String getPartyList() {
-        return partyList;
+    public PartyList getPartylist() {
+        return partylist;
     }
 
-    public void setPartyList(String partyList) {
-        this.partyList = partyList;
+    public void setPartylist(PartyList partylist) {
+        this.partylist = partylist;
     }
 
     public String getIntroduction() {
