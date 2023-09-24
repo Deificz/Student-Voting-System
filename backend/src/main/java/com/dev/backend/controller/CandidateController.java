@@ -37,11 +37,12 @@ public class CandidateController {
     @GetMapping("/candidate")
     public List<CandidateResponse> getAllCandidates(){
         List<Candidate> candidateList = candidateRepository.findAll();
+        
         return candidateList.stream()
                 .map(candidate -> new CandidateResponse(
                         candidate.getId(),
                         candidate.getName(),
-                        candidate.getPartylist().toString(),
+                        candidate.getPartylist().getPartylistName(),
                         candidate.getCandidateRole().getRoleName(),
                         candidate.getIntroduction(),
                         candidate.getAwards(),
