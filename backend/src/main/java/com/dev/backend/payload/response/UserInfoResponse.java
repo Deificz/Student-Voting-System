@@ -1,5 +1,7 @@
 package com.dev.backend.payload.response;
 
+import com.dev.backend.entity.Vote;
+
 import java.util.List;
 
 public class UserInfoResponse {
@@ -11,16 +13,19 @@ public class UserInfoResponse {
     private String email;
     private boolean hasvoted;
 
+    private List<Long> votedCandidates;
+
     private List<String> roles;
 
-    public UserInfoResponse(Long id, String studentNumber, String firstName, String lastName, String middleName, String email, boolean hasVoted, List<String> roles) {
+    public UserInfoResponse(Long id, String studentnumber, String firstname, String lastname, String middlename, String email, boolean hasvoted, List<Long> votedCandidates, List<String> roles) {
         this.id = id;
-        this.studentnumber = studentNumber;
-        this.firstname = firstName;
-        this.lastname = lastName;
-        this.middlename = middleName;
+        this.studentnumber = studentnumber;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.middlename = middlename;
         this.email = email;
-        this.hasvoted = hasVoted;
+        this.hasvoted = hasvoted;
+        this.votedCandidates = votedCandidates;
         this.roles = roles;
     }
 
@@ -82,5 +87,17 @@ public class UserInfoResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public List<Long> getVotedCandidates() {
+        return votedCandidates;
+    }
+
+    public void setVotedCandidates(List<Long> votedCandidates) {
+        this.votedCandidates = votedCandidates;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

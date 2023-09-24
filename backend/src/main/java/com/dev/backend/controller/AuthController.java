@@ -3,12 +3,14 @@ package com.dev.backend.controller;
 import com.dev.backend.entity.ERole;
 import com.dev.backend.entity.Role;
 import com.dev.backend.entity.User;
+import com.dev.backend.entity.Vote;
 import com.dev.backend.payload.request.LoginRequest;
 import com.dev.backend.payload.request.SignupRequest;
 import com.dev.backend.payload.response.MessageResponse;
 import com.dev.backend.payload.response.UserInfoResponse;
 import com.dev.backend.repository.RoleRepository;
 import com.dev.backend.repository.UserRepository;
+import com.dev.backend.repository.VoteRepository;
 import com.dev.backend.security.jwt.JWTUtils;
 import com.dev.backend.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
@@ -23,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +41,8 @@ public class AuthController {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    VoteRepository voteRepository;
     @Autowired
     PasswordEncoder encoder;
     @Autowired
@@ -59,6 +64,8 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+//        List<Vote> votes = voteRepository.findByUserId(userDetails.getId());
+            List<Long> votes = voteRepository.findCandidateIdsByUserId(userDetails.getId());
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .body(new UserInfoResponse(userDetails.getId(),
@@ -68,6 +75,7 @@ public class AuthController {
                         userDetails.getMiddleName(),
                         userDetails.getUsername(),
                         userDetails.isHasVoted(),
+                        votes,
                         roles));
     }
 
