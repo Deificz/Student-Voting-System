@@ -5,10 +5,7 @@ import com.dev.backend.payload.request.VoteRequest;
 import com.dev.backend.payload.response.CandidateResponse;
 import com.dev.backend.payload.response.DataResponse;
 import com.dev.backend.payload.response.MessageResponse;
-import com.dev.backend.repository.CandidateRepository;
-import com.dev.backend.repository.CandidateRoleRepository;
-import com.dev.backend.repository.UserRepository;
-import com.dev.backend.repository.VoteRepository;
+import com.dev.backend.repository.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,14 +24,15 @@ import java.util.stream.Collectors;
 public class CandidateController {
     @Autowired
     private CandidateRepository candidateRepository;
-
     @Autowired
     private CandidateRoleRepository candidateRoleRepository;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private VoteRepository voteRepository;
+    @Autowired
+    private PartyListRepository partyListRepository;
+
 
     @GetMapping("/candidate")
     public List<CandidateResponse> getAllCandidates(){
@@ -43,7 +41,7 @@ public class CandidateController {
                 .map(candidate -> new CandidateResponse(
                         candidate.getId(),
                         candidate.getName(),
-                        candidate.getPartyList(),
+                        candidate.getPartylist().toString(),
                         candidate.getCandidateRole().getRoleName(),
                         candidate.getIntroduction(),
                         candidate.getAwards(),
@@ -55,11 +53,12 @@ public class CandidateController {
     public ResponseEntity<?> getCandidateByID(@PathVariable Long id){
         Optional<Candidate> candidate = candidateRepository.findById(id);
         if (candidate.isPresent()){
-            CandidateRole candidateRole = candidateRoleRepository.getReferenceById(candidate.get().getId());
+            CandidateRole candidateRole = candidateRoleRepository.getReferenceById(candidate.get().getCandidateRole().getId());
+            PartyList partyList = partyListRepository.getReferenceById(candidate.get().getPartylist().getId());
             return ResponseEntity.ok().body(new CandidateResponse(
                     candidate.get().getId(),
                     candidate.get().getName(),
-                    candidate.get().getPartyList(),
+                    partyList.getPartylistName(),
                     candidateRole.getRoleName(),
                     candidate.get().getIntroduction(),
                     candidate.get().getAwards(),
