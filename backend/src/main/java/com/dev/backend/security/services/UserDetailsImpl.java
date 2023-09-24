@@ -1,5 +1,6 @@
 package com.dev.backend.security.services;
 
+import com.dev.backend.entity.Vote;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.dev.backend.entity.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,10 +23,10 @@ public class UserDetailsImpl implements UserDetails {
 
     private String password;
     private boolean hasVoted;
-
+    private List<Vote> votedCandidates;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String studentNumber, String firstName, String lastName, String middleName, String email, String password, boolean hasVoted, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String studentNumber, String firstName, String lastName, String middleName, String email, String password, boolean hasVoted, List<Vote> votedCandidates, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.studentNumber = studentNumber;
         this.firstName = firstName;
@@ -34,6 +35,7 @@ public class UserDetailsImpl implements UserDetails {
         this.email = email;
         this.password = password;
         this.hasVoted = hasVoted;
+        this.votedCandidates = votedCandidates;
         this.authorities = authorities;
     }
 
@@ -51,6 +53,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.isHasVoted(),
+                user.getVotes(),
                 authorities);
     }
 
@@ -87,6 +90,9 @@ public class UserDetailsImpl implements UserDetails {
         return hasVoted;
     }
 
+    public List<Vote> getVotedCandidates() {
+        return votedCandidates;
+    }
 
     @Override
     public String getPassword() {
