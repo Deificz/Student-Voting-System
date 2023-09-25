@@ -46,7 +46,8 @@ public class CandidateController {
                         candidate.getCandidateRole().getRoleName(),
                         candidate.getIntroduction(),
                         candidate.getAwards(),
-                        candidate.getPlatforms()))
+                        candidate.getPlatforms(),
+                        candidate.getVoteCount()))
                 .collect(Collectors.toList());
     }
 
@@ -63,7 +64,8 @@ public class CandidateController {
                     candidateRole.getRoleName(),
                     candidate.get().getIntroduction(),
                     candidate.get().getAwards(),
-                    candidate.get().getPlatforms()));
+                    candidate.get().getPlatforms(),
+                    candidate.get().getVoteCount()));
         }
         else {
             return ResponseEntity.notFound().build();
@@ -86,6 +88,8 @@ public class CandidateController {
                     Vote vote = new Vote();
                     vote.setUser(user);
                     vote.setCandidate(candidate);
+                    candidate.incrementVoteCount();
+                    candidateRepository.save(candidate);
                     voteRepository.save(vote);
                 }
             }

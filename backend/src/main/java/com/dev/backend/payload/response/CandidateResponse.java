@@ -12,17 +12,20 @@ public class CandidateResponse {
 
     private List<String> platforms;
 
+    private int voteCount;
+
     public CandidateResponse() {
     }
 
-    public CandidateResponse(Long id, String candidatename, String partyListname, String candidaterolename, String introduction, List<String> awards, List<String> platforms) {
+    public CandidateResponse(Long id, String name, String partylist, String rolename, String introduction, List<String> awards, List<String> platforms, int voteCount) {
         this.id = id;
-        this.name = candidatename;
-        this.partylist = partyListname;
-        this.rolename = candidaterolename;
+        this.name = name;
+        this.partylist = partylist;
+        this.rolename = rolename;
         this.introduction = introduction;
         this.awards = awards;
         this.platforms = platforms;
+        this.voteCount = voteCount;
     }
 
     public Long getId() {
@@ -79,5 +82,13 @@ public class CandidateResponse {
 
     public void setPlatforms(List<String> platforms) {
         this.platforms = platforms;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 }
