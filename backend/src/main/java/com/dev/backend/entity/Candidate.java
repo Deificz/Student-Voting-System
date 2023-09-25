@@ -15,7 +15,6 @@ public class Candidate {
     @NotBlank
     private String name;
 
-    @NotBlank
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "partylist_id", referencedColumnName = "id")
     private PartyList partylist;
@@ -35,6 +34,8 @@ public class Candidate {
     @ElementCollection
     @Size(max = 10000)
     private List<String> platforms;
+
+    private int voteCount;
 
     public Candidate() {
     }
@@ -101,5 +102,17 @@ public class Candidate {
 
     public void setPlatforms(List<String> platforms) {
         this.platforms = platforms;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public void incrementVoteCount() {
+        this.voteCount++;
     }
 }
