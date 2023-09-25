@@ -26,7 +26,7 @@ export default function candidate_card({ position }) {
         <h1>{position}</h1>
         {isAdmin && (
           <button>
-            <i className="p-3 text-black transition-all duration-300 bg-white border-4 rounded-full fa-solid fa-plus hover:text-white hover:bg-color-green hover:border-color-green border-color-green"></i>
+            <i className="p-3 mt-5  text-black transition-all duration-300 bg-white border-4 rounded-full fa-solid fa-plus hover:text-white hover:bg-color-green hover:border-color-green border-color-green"></i>
           </button>
         )}
       </div>
@@ -44,7 +44,7 @@ export default function candidate_card({ position }) {
                 className="flex flex-col justify-between h-[300px] w-[230px] md:w-[300px] md:h-[300px] 2xl:w-[400px] 2xl:h-[400px] border-2 my-10 border-color-blue rounded-xl shadow-card hover:-translate-y-3 transition-all duration-300 px-2 py-4"
               >
                 {isAdmin && (
-                  <button className="self-end w-10 h-10 mr-3 text-gray-200 transition-all duration-300 border-4 border-white rounded-full bg-color-red hover:text-black hover:bg-white hover:border-color-red">
+                  <button className="self-end w-10 min-h-10 mr-3 text-gray-200 transition-all duration-300 border-4 border-white rounded-full bg-color-red hover:text-black hover:bg-white hover:border-color-red">
                     <i className="fa-solid fa-minus"></i>
                   </button>
                 )}
