@@ -19,7 +19,7 @@ export default function vote_done({ userVotes, userName }) {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="flex flex-col items-center p-5 mt-20 border-4 rounded-xl shadow-card md:px-32 md:py-10 2xl:px-44 border-color-blue">
+      <div className="flex flex-col items-center p-5 mt-20 md:mt-16 2xl:mt-24 border-4 rounded-xl shadow-card md:px-32 md:py-10 2xl:px-44 border-color-blue">
         <h1 className="mb-10 text-2xl font-bold md:text-2xl 2xl:text-4xl ">
           Hi{" "}
           <span className="text-color-blue">
