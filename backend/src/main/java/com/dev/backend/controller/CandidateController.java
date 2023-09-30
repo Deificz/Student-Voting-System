@@ -72,6 +72,17 @@ public class CandidateController {
         }
     }
 
+    @DeleteMapping("/candidate/{id}")
+    public ResponseEntity<?> deleteCandidate(@PathVariable Long id){
+        Optional<Candidate> candidate = candidateRepository.findById(id);
+        if (candidate.isPresent()){
+            Candidate candidateToDelete = candidate.get();
+            candidateRepository.delete(candidateToDelete);
+            return ResponseEntity.ok().body(new MessageResponse(HttpStatus.OK.value(), "Candidate successfully deleted!"));
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(HttpStatus.NOT_FOUND.value(), "Candidate with id " + id + " not found."));
+    }
+
     @PostMapping("/candidate/vote")
     public ResponseEntity<?> vote(@Valid @RequestBody VoteRequest voteRequest){
         Long userId = voteRequest.getUserId();
@@ -79,7 +90,7 @@ public class CandidateController {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null){
             if (user.isHasVoted())
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse("User already voted!"));
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse(HttpStatus.FORBIDDEN.value(), "User already voted!"));
             List<Vote> votes = new ArrayList<>();
             for (Long candidateId : candidateIds) {
                 Optional<Candidate> candidateOptional = candidateRepository.findById(candidateId);
@@ -95,9 +106,9 @@ public class CandidateController {
             }
             user.setHasVoted(true);
             userRepository.save(user);
-            return ResponseEntity.ok(new MessageResponse("Vote saved successfully."));
+            return ResponseEntity.ok(new MessageResponse(HttpStatus.OK.value(), "Vote saved successfully."));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("User not found!"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(HttpStatus.NOT_FOUND.value(), "User not found!"));
     }
 
     @GetMapping("/user/{id}/votes")
