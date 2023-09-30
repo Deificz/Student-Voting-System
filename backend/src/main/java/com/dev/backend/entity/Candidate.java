@@ -40,8 +40,7 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, PartyList partylist, String introduction, CandidateRole candidateRole) {
-        this.id = id;
+    public Candidate(String name, PartyList partylist, String introduction, CandidateRole candidateRole) {
         this.name = name;
         this.partylist = partylist;
         this.introduction = introduction;

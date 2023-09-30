@@ -1,6 +1,7 @@
 package com.dev.backend.controller;
 
 import com.dev.backend.entity.*;
+import com.dev.backend.payload.request.AddCandidateRequest;
 import com.dev.backend.payload.request.VoteRequest;
 import com.dev.backend.payload.response.CandidateResponse;
 import com.dev.backend.payload.response.DataResponse;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,6 +51,28 @@ public class CandidateController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/candidate")
+    public ResponseEntity<?> addCandidate(@RequestBody AddCandidateRequest candidateRequest){
+        Optional<PartyList> partyList = Optional.of(partyListRepository.getReferenceById(candidateRequest.getPartylist()));
+        Optional<CandidateRole> candidateRole = Optional.of(candidateRoleRepository.getReferenceById(candidateRequest.getCandidateRole()));
+        if (candidateRepository.existsByCandidateRoleAndPartylist(
+                candidateRole.get(), partyList.get())) {
+            return ResponseEntity.badRequest().body(new MessageResponse(HttpStatus.BAD_REQUEST.value(), "A candidate with the same role already exists in this party list."));
+        }
+
+        Candidate candidate = new Candidate(
+                candidateRequest.getName(),
+                partyList.get(),
+                candidateRequest.getIntroduction(),
+                candidateRole.get()
+        );
+        candidate.setAwards(candidateRequest.getAwards());
+        candidate.setPlatforms(candidateRequest.getPlatforms());
+        candidateRepository.save(candidate);
+
+        return ResponseEntity.ok().body(new MessageResponse(HttpStatus.OK.value(), "Candidate added successfully!"));
+    }
+
     @GetMapping("/candidate/{id}")
     public ResponseEntity<?> getCandidateByID(@PathVariable Long id){
         Optional<Candidate> candidate = candidateRepository.findById(id);
@@ -76,6 +98,11 @@ public class CandidateController {
     public ResponseEntity<?> deleteCandidate(@PathVariable Long id){
         Optional<Candidate> candidate = candidateRepository.findById(id);
         if (candidate.isPresent()){
+            List<Vote> votes = voteRepository.findAllByCandidateId(id);
+            for (Vote vote:
+                 votes) {
+                voteRepository.delete(vote);
+            }
             Candidate candidateToDelete = candidate.get();
             candidateRepository.delete(candidateToDelete);
             return ResponseEntity.ok().body(new MessageResponse(HttpStatus.OK.value(), "Candidate successfully deleted!"));
