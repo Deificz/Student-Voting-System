@@ -13,4 +13,6 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
     List<Vote> findByUserId(Long userId);
     @Query("SELECT v.candidate.id FROM Vote v WHERE v.user.id = :userId")
     List<Long> findCandidateIdsByUserId(@Param("userId") Long userId);
+
+    List<Vote> findAllByCandidateId(Long candidateId);
 }
