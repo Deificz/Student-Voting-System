@@ -1,7 +1,7 @@
 package com.dev.backend.controller;
 
 import com.dev.backend.entity.*;
-import com.dev.backend.payload.request.AddCandidateRequest;
+import com.dev.backend.payload.request.CandidateRequest;
 import com.dev.backend.payload.request.VoteRequest;
 import com.dev.backend.payload.response.CandidateResponse;
 import com.dev.backend.payload.response.DataResponse;
@@ -43,6 +43,7 @@ public class CandidateController {
                         candidate.getId(),
                         candidate.getName(),
                         candidate.getPartylist().getPartylistName(),
+                        candidate.getCandidateRole().getId(),
                         candidate.getCandidateRole().getRoleName(),
                         candidate.getIntroduction(),
                         candidate.getAwards(),
@@ -52,7 +53,7 @@ public class CandidateController {
     }
 
     @PostMapping("/candidate")
-    public ResponseEntity<?> addCandidate(@RequestBody AddCandidateRequest candidateRequest){
+    public ResponseEntity<?> addCandidate(@RequestBody CandidateRequest candidateRequest){
         Optional<PartyList> partyList = Optional.of(partyListRepository.getReferenceById(candidateRequest.getPartylist()));
         Optional<CandidateRole> candidateRole = Optional.of(candidateRoleRepository.getReferenceById(candidateRequest.getCandidateRole()));
         if (candidateRepository.existsByCandidateRoleAndPartylist(
@@ -83,6 +84,7 @@ public class CandidateController {
                     candidate.get().getId(),
                     candidate.get().getName(),
                     partyList.getPartylistName(),
+                    candidate.get().getCandidateRole().getId(),
                     candidateRole.getRoleName(),
                     candidate.get().getIntroduction(),
                     candidate.get().getAwards(),
@@ -108,6 +110,25 @@ public class CandidateController {
             return ResponseEntity.ok().body(new MessageResponse(HttpStatus.OK.value(), "Candidate successfully deleted!"));
         } else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(HttpStatus.NOT_FOUND.value(), "Candidate with id " + id + " not found."));
+    }
+
+    @PutMapping("/candidate/{id}")
+    public ResponseEntity<?> updateCandidate(@PathVariable Long id, @RequestBody CandidateRequest candidateRequest){
+        Candidate existingCandidate = candidateRepository.findById(id).orElse(null);
+        Optional<PartyList> partyList = Optional.of(partyListRepository.getReferenceById(candidateRequest.getPartylist()));
+        Optional<CandidateRole> candidateRole = Optional.of(candidateRoleRepository.getReferenceById(candidateRequest.getCandidateRole()));
+        if (existingCandidate != null){
+            existingCandidate.setName(candidateRequest.getName());
+            existingCandidate.setIntroduction(candidateRequest.getIntroduction());
+            existingCandidate.setPartylist(partyList.get());
+            existingCandidate.setCandidateRole(candidateRole.get());
+            existingCandidate.setAwards(candidateRequest.getAwards());
+            existingCandidate.setPlatforms(candidateRequest.getPlatforms());
+
+            candidateRepository.save(existingCandidate);
+            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(HttpStatus.OK.value(), "Candidate with id " + id + " successfully edited!" ));
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(HttpStatus.NOT_FOUND.value(), "Candidate with id " + id + " not found!"));
     }
 
     @PostMapping("/candidate/vote")
