@@ -1,17 +1,8 @@
 package com.dev.backend.payload.request;
 
-import com.dev.backend.entity.CandidateRole;
-import com.dev.backend.entity.PartyList;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 import java.util.List;
 
-public class AddCandidateRequest {
+public class CandidateRequest {
     private String name;
 
     private Long partylist;
