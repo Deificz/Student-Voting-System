@@ -45,6 +45,9 @@ export default function vote_form() {
   const [president, setPresident] = useState({});
   const [vicePresident, setVicePresident] = useState({});
   const [secretary, setSecretary] = useState({});
+  const [treasurer, setTreasurer] = useState({});
+  const [auditor, setAuditor] = useState({});
+  const [pro, setPRO] = useState({});
 
 
   useEffect(() => {
@@ -69,12 +72,25 @@ export default function vote_form() {
   const handleSecretary = (e) => {
     setSecretary(Number(e.target.value));
   };
+  const handleTreasurer = (e) => {
+    setTreasurer(Number(e.target.value));
+  };
+  const handleAuditor = (e) => {
+    setAuditor(Number(e.target.value));
+  };
+  const handlePRO = (e) => {
+    setPRO(Number(e.target.value));
+  };
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: ACTIONS.SET_VOTE, payload: president });
     dispatch({ type: ACTIONS.SET_VOTE, payload: vicePresident });
     dispatch({ type: ACTIONS.SET_VOTE, payload: secretary });
+    dispatch({ type: ACTIONS.SET_VOTE, payload: treasurer });
+    dispatch({ type: ACTIONS.SET_VOTE, payload: auditor });
+    dispatch({ type: ACTIONS.SET_VOTE, payload: pro });
     setIsOk(true);
   };
 
@@ -154,6 +170,73 @@ export default function vote_form() {
                   </option>
                 ))}
           </select>
+
+          <label
+            htmlFor=""
+            className="text-xl font-semibold md:text-2xl 2xl:text-4xl"
+          >
+            Treasurer
+          </label>
+          <select
+            onChange={handleTreasurer}
+            className="p-3 mt-2 mb-10 text-lg border-2 md:text-2xl 2xl:4xl border-color-blue"
+            required
+          >
+            <option value="">Select an option</option>
+            {status === "Done" &&
+              candidates
+                .filter((candidate) => candidate.rolename === "Treasurer")
+                .map((candidate) => (
+                  <option key={candidate.id} value={candidate.id}>
+                    {candidate.name}
+                  </option>
+                ))}
+          </select>
+
+          <label
+            htmlFor=""
+            className="text-xl font-semibold md:text-2xl 2xl:text-4xl"
+          >
+            Auditor
+          </label>
+          <select
+            onChange={handleAuditor}
+            className="p-3 mt-2 mb-10 text-lg border-2 md:text-2xl 2xl:4xl border-color-blue"
+            required
+          >
+            <option value="">Select an option</option>
+            {status === "Done" &&
+              candidates
+                .filter((candidate) => candidate.rolename === "Auditor")
+                .map((candidate) => (
+                  <option key={candidate.id} value={candidate.id}>
+                    {candidate.name}
+                  </option>
+                ))}
+          </select>
+
+          <label
+            htmlFor=""
+            className="text-xl font-semibold md:text-2xl 2xl:text-4xl"
+          >
+            Public Relations Officer
+          </label>
+          <select
+            onChange={handlePRO}
+            className="p-3 mt-2 mb-10 text-lg border-2 md:text-2xl 2xl:4xl border-color-blue"
+            required
+          >
+            <option value="">Select an option</option>
+            {status === "Done" &&
+              candidates
+                .filter((candidate) => candidate.rolename === "Public Relations Officer")
+                .map((candidate) => (
+                  <option key={candidate.id} value={candidate.id}>
+                    {candidate.name}
+                  </option>
+                ))}
+          </select>
+
           <button className="self-end col-start-2 row-start-6 px-16 py-5 mt-5 text-xl font-semibold text-white transition-all duration-300 border-2 rounded-lg bg-color-blue 2xl:p-8 2xl:text-3xl shadow-button md:w-fit hover:bg-white hover:text-color-blue border-color-blue">
             Vote
           </button>

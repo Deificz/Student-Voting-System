@@ -53,6 +53,7 @@ export function VoteUtilProvider({ children }) {
 
       if(response.ok){
         const responseData = await response.json();
+        
         dispatch({type:ACTIONS.SET_STATUS, payload: responseData.status});
         dispatch({type: ACTIONS.SET_USERVOTE, payload: responseData.data});
         

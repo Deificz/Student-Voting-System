@@ -43,7 +43,6 @@ export function CandidateProvider({ children }) {
         const candidateData = await response.json();
         localStorage.setItem("Candidates", JSON.stringify(candidateData));
         dispatch({ type: ACTIONS.LOAD_CANDIDATE, payload: candidateData });
-        console.log(candidateData);
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
       } else {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Error" });
