@@ -6,6 +6,7 @@ public class CandidateResponse {
     private Long id;
     private String name;
     private String partylist;
+    private Long roleId;
     private String rolename;
     private String introduction;
     private List<String> awards;
@@ -17,10 +18,11 @@ public class CandidateResponse {
     public CandidateResponse() {
     }
 
-    public CandidateResponse(Long id, String name, String partylist, String rolename, String introduction, List<String> awards, List<String> platforms, int voteCount) {
+    public CandidateResponse(Long id, String name, String partylist, Long roleId, String rolename, String introduction, List<String> awards, List<String> platforms, int voteCount) {
         this.id = id;
         this.name = name;
         this.partylist = partylist;
+        this.roleId = roleId;
         this.rolename = rolename;
         this.introduction = introduction;
         this.awards = awards;
@@ -50,6 +52,14 @@ public class CandidateResponse {
 
     public void setPartylist(String partylist) {
         this.partylist = partylist;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getRolename() {
