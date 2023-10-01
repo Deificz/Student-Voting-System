@@ -18,7 +18,7 @@ const ACTIONS = {
 const reducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.SET_LOADING:
-      return { ...state, status: action.payload } ;
+      return { ...state, status: action.payload };
     case ACTIONS.SET_ERROR:
       return { ...state, isError: true };
     case ACTIONS.LOAD_CANDIDATE:
@@ -37,12 +37,13 @@ export function CandidateProvider({ children }) {
   async function getCandidates() {
     try {
       const response = await fetch("http://localhost:8080/api/v1/candidate");
-
+      dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
       if (response.ok) {
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
+        
         const candidateData = await response.json();
         localStorage.setItem("Candidates", JSON.stringify(candidateData));
         dispatch({ type: ACTIONS.LOAD_CANDIDATE, payload: candidateData });
+        console.log(candidateData);
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
       } else {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Error" });
@@ -54,6 +55,8 @@ export function CandidateProvider({ children }) {
       dispatch({ type: ACTIONS.SET_ERROR });
     }
   }
+
+  console.log(status);
 
   async function getCandidateById(id) {
     try {
@@ -64,8 +67,11 @@ export function CandidateProvider({ children }) {
       if (response.ok) {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
         const candidateData = await response.json();
-        localStorage.setItem('currentCandidate', JSON.stringify(candidateData));
-        dispatch({type: ACTIONS.SET_CURRENT_CANDIDATE, payload: candidateData});
+        localStorage.setItem("currentCandidate", JSON.stringify(candidateData));
+        dispatch({
+          type: ACTIONS.SET_CURRENT_CANDIDATE,
+          payload: candidateData,
+        });
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
       } else {
         dispatch({ type: ACTIONS.SET_LOADING, payload: "Error" });
@@ -78,11 +84,39 @@ export function CandidateProvider({ children }) {
     }
   }
 
+  async function removeCandidateById(id) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/candidate/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      );
+      
+      if(response.ok){
+        dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
+        const responseData = await response.json();
+        console.log(responseData);
+        dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
+      }else{
+        dispatch({type: ACTIONS.SET_ERROR, payload: "Server failed to respond"});
+        console.log("Server did not respond: Failed to delete");
+      }
+    } catch {
+      dispatch({type: ACTIONS.SET_ERROR, payload: "Error"});
+      console.log("Failed to delete");
+    }
+  }
+
   const candidateValues = {
     candidates,
     currentCandidate,
     getCandidates,
     getCandidateById,
+    removeCandidateById,
     isError,
     status,
   };

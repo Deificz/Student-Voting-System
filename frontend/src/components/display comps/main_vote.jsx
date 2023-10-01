@@ -14,6 +14,7 @@ export default function main_vote() {
   }, [userVotes]);
   
   return (
+    
     <>
       {userVotes.length === 0 ? (
         <VoteForm />

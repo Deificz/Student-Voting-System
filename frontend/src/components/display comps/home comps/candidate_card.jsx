@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useCandidates } from "../../../utils/Candidates";
 import { Link } from "react-router-dom";
 export default function candidate_card({ position }) {
-  const { getCandidates, status } = useCandidates();
+  const { getCandidates, status, removeCandidateById } = useCandidates();
   const [isAdmin, setIsAdmin] = useState(false);
   const [candidates, setCandidates] = useState(
     JSON.parse(localStorage.getItem("Candidates"))
   );
   useEffect(() => {
-    getCandidates();
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [role] = userData.roles;
     const boolAdmin = role === "ROLE_ADMIN";
 
     setIsAdmin(boolAdmin);
   }, []);
+
+  const handleDelete = async (id) => {
+    try{
+      await removeCandidateById(id);
+      await getCandidates();
+      setCandidates(JSON.parse(localStorage.getItem("Candidates")));
+    }catch(error){
+      console.error(error);
+    }
+   
+  }
 
   return (
     <div className="w-[100dvw] h-[100dvh] flex flex-col items-center">
@@ -33,18 +43,18 @@ export default function candidate_card({ position }) {
 
       <div
         id="candidate-panel"
-        className="flex flex-wrap md:overflow-y-auto justify-evenly"
+        className="flex flex-wrap md:overflow-y-auto justify-evenly w-full"
       >
-        {status === "Done" &&
+        {status === 'Done' ?
           candidates
             .filter((person) => person.rolename === position)
             .map((candidate) => (
               <div
                 key={candidate.id}
-                className="flex flex-col justify-between h-[300px] w-[230px] md:w-[300px] md:h-[300px] 2xl:w-[400px] 2xl:h-[400px] border-2 my-10 border-color-blue rounded-xl shadow-card hover:-translate-y-3 transition-all duration-300 px-2 py-4"
+                className="flex flex-col mr-5 justify-between h-[350px] w-[230px] md:w-[300px] md:h-[400px] 2xl:w-[400px] 2xl:h-[450px] border-2 my-10 border-color-blue rounded-xl shadow-card hover:-translate-y-3 transition-all duration-300 px-2 py-4"
               >
                 {isAdmin && (
-                  <button className="self-end w-10 min-h-10 mr-3 text-gray-200 transition-all duration-300 border-4 border-white rounded-full bg-color-red hover:text-black hover:bg-white hover:border-color-red">
+                  <button onClick={() => handleDelete(candidate.id)} className="self-end w-10 min-h-10 mr-3 text-gray-200 transition-all duration-300 border-4 border-white rounded-full bg-color-red hover:text-black hover:bg-white hover:border-color-red" >
                     <i className="fa-solid fa-minus"></i>
                   </button>
                 )}
@@ -69,7 +79,7 @@ export default function candidate_card({ position }) {
                   </h1>
                 </Link>
               </div>
-            ))}
+            )) : <h1>Loading..</h1>}
       </div>
     </div>
   );

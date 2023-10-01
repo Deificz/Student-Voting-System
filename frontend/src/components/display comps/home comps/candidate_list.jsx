@@ -12,6 +12,12 @@ export default function candidate_list() {
         <CandidateCard position="Vice President" />
       ) : currentPosView === "Secretary" ? (
         <CandidateCard position="Secretary" />
+      ) : currentPosView === "Treasurer" ? (
+        <CandidateCard position="Treasurer" />
+      ) : currentPosView === "Auditor" ? (
+        <CandidateCard position="Auditor" />
+      ) : currentPosView === "P.R.O" ? (
+        <CandidateCard position="Public Relations Officer" />
       ) : (
         ""
       )}

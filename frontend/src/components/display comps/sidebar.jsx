@@ -10,6 +10,9 @@ export default function sidebar() {
     { id: 1, title: "President" },
     { id: 2, title: "V. President" },
     { id: 3, title: "Secretary" },
+    { id: 4, title: "Treasurer" },
+    { id: 5, title: "Auditor" },
+    { id: 6, title: "P.R.O" },
   ];
   const handleClick = (e) => {
     setCurrentPosView(e.target.textContent);
