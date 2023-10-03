@@ -16,6 +16,9 @@ export default {
       boxShadow:{
         'card' : '15px 15px 10px 0px rgba(0, 0, 0, 0.3)',
         'button' : '5px 5px 5px 0px rgba(0, 0, 0, 0.3)'
+      },
+      screens:{
+        'sm_max': {'max': '700px'},
       }
     },
   },

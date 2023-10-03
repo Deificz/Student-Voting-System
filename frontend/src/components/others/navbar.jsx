@@ -43,33 +43,33 @@ export default function Nav() {
             onClick={handleNav}
           ></i>
           <div
-            className={`grid grid-rows-[.5fr_1fr_2fr] md:flex md:flex-row items-center md:justify-between transition-all duration-300 max-[700px]:rounded-l-3xl
-                          max-[700px]:justify-evenly max-[700px]:fixed max-[700px]:top-0 max-[700px]:h-[100%] 
-                        max-[700px]:bg-white max-[700px]:border-color-blue max-[700px]:border-l-2 
-                          max-[700px]:right-0 max-[700px]:pl-5 max-[700px]:text-2xl
+            className={`grid grid-rows-[.5fr_1fr_2fr] md:flex md:flex-row items-center md:justify-between transition-all duration-300 sm_max:rounded-l-3xl
+                          sm_max:justify-evenly sm_max:fixed sm_max:top-0 sm_max:h-[100%] 
+                        sm_max:bg-white sm_max:border-color-blue sm_max:border-l-2 
+                          sm_max:right-0 sm_max:pl-5 sm_max:text-2xl
                           ${
                             isOpen
-                              ? "max-[700px]:right-[0px]"
-                              : "max-[700px]:right-[-150px]"
+                              ? "sm_max:right-[0px]"
+                              : "sm_max:right-[-200px]"
                           }`}
             onClick={handleNav}
           >
             <i className="mr-3 text-3xl cursor-pointer fa-regular fa-circle-xmark md:hidden justify-self-end"></i>
-            <div className="flex flex-col md:flex-row ">
+            <div className="flex flex-col px-3 md:flex-row ">
               <Link to="/home/candidates">
-                <li className="mr-10 font-semibold text-xl 2xl:text-3xl max-[700px]:mb-5">
+                <li className="mr-10 font-semibold text-xl 2xl:text-3xl sm_max:mb-5 sm_max:border-l-2 sm_max:border-color-blue sm_max:pl-3">
                   Home
                 </li>
               </Link>
               {isAdmin ? (
                 <Link to="/dashboard">
-                  <li className="text-xl font-semibold 2xl:text-3xl">
+                  <li className="text-xl font-semibold 2xl:text-3xl  sm_max:border-l-2 sm_max:border-color-blue sm_max:pl-3">
                     Dashboard
                   </li>
                 </Link>
               ) : (
                 <Link to="/vote">
-                  <li className="text-xl font-semibold 2xl:text-3xl">Vote</li>
+                  <li className="text-xl font-semibold 2xl:text-3xl  sm_max:border-l-2 sm_max:border-color-blue sm_max:pl-3">Vote</li>
                 </Link>
               )}
             </div>
