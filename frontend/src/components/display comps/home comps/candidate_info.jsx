@@ -41,7 +41,7 @@ export default function candidate_info() {
             {currentCandidate.partylist}
           </h2>
 
-          <div className="mt-10 flex flex-col justify-center w-[50dvw] pl-5 2xl:pl-10  py-10 rounded-xl md:border-2 mb-10 border-color-blue md:shadow-card">
+          <div className="mt-10 flex flex-col justify-center w-[50dvw] px-5 2xl:pl-10  py-10 rounded-xl md:border-2 mb-10 border-color-blue md:shadow-card">
             <h3 className="mb-5 text-xl font-bold md:text-xl 2xl:text-4xl">
               Introduction
             </h3>
