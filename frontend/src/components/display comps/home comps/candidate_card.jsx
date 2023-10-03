@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useCandidates } from "../../../utils/Candidates";
 import { Link } from "react-router-dom";
+import Modal from "./add_modal";
+
 export default function candidate_card({ position }) {
   const { getCandidates, status, removeCandidateById } = useCandidates();
   const [isAdmin, setIsAdmin] = useState(false);
   const [candidates, setCandidates] = useState(
     JSON.parse(localStorage.getItem("Candidates"))
   );
+
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [role] = userData.roles;
@@ -35,7 +40,7 @@ export default function candidate_card({ position }) {
       >
         <h1>{position}</h1>
         {isAdmin && (
-          <button>
+          <button onClick={() => setOpenModal(true)}>
             <i className="p-3 mt-5  text-black transition-all duration-300 bg-white border-4 rounded-full fa-solid fa-plus hover:text-white hover:bg-color-green hover:border-color-green border-color-green"></i>
           </button>
         )}
@@ -80,7 +85,10 @@ export default function candidate_card({ position }) {
                 </Link>
               </div>
             )) : <h1>Loading..</h1>}
-      </div>
+        </div>
+        
+        {openModal && <Modal closeModal={setOpenModal}/>}
     </div>
+    
   );
 }
