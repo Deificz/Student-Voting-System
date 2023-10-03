@@ -75,14 +75,13 @@ export function CandidateProvider({ children }) {
       if(response.ok){
         const candidateData = await response.json();
         console.log(candidateData);
-        console.log('asda')
       }else{
         console.log("Server failed to respond");
       }
 
     }catch(error){
       console.log(error);
-      console.log('asda')
+      console.log('Failed to fetch')
     }
   }
 
