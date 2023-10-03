@@ -87,7 +87,7 @@ export default function candidate_card({ position }) {
             )) : <h1>Loading..</h1>}
         </div>
         
-        {openModal && <Modal closeModal={setOpenModal}/>}
+        {openModal && <Modal closeModal={setOpenModal} position={position}/>}
     </div>
     
   );

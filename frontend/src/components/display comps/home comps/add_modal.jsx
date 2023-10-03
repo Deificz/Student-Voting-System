@@ -1,22 +1,40 @@
-import React, { useState } from 'react'
-import Text from '../../form comps/candidate/add_text'
-export default function add_modal({closeModal}) {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [partylist, setPartylist] = useState("");
+import React, { useEffect, useState } from 'react'
+import Text from '../../form comps/candidate/add_input'
+import { useCandidates } from '../../../utils/Candidates';
+export default function add_modal({closeModal, position}) {
+    const {addCandidate, getCandidates} = useCandidates();
+
+    const [name, setName] = useState("");
+    const [partylist, setPartylist] = useState(null);
     const [introduction, setIntroduction] = useState("");
-    const [awards, setAwards] = useState("");
-    const [platforms, setPlatforms] = useState("");
+    const [role, setRole] = useState(null);
+    const [awards, setAwards] = useState([]);
+    const [platforms, setPlatforms] = useState([]);
+    
+    useEffect(() => {
+      position === "President" ? setRole(1) :
+      position === "Vice President" ? setRole(2) :
+      position === "Secretary" ? setRole(3) :
+      position === "Treasurer" ? setRole(4) :
+      position === "Auditor" ? setRole(5) :
+      position === "Public Relations Officer" ? setRole(6) : ''
+    },[]);
+
+    const handleSubmit = (e) =>{
+      e.preventDefault();
+      addCandidate(name,partylist,introduction,role,awards,platforms);
+      getCandidates();
+      closeModal(false);
+    }
 
   return (
     <dialog className='bg-black bg-opacity-70 w-full h-full z-20 flex justify-center items-center'>
-       <form action="" method='POST' className='flex flex-col md:grid grid-cols-2 p-5 border-2 border-color-blue rounded-2xl mt-10 mb-10 md:ml-28 bg-white'>
+       <form action="" method='POST' onSubmit={handleSubmit} className='flex flex-col md:grid grid-cols-2 p-5 border-2 border-color-blue rounded-2xl mt-10 mb-10 md:ml-28 bg-white'>
             <div className='grid col-span-2 grid-cols-2 '>
                 <h1 className='text-2xl md:text-3xl 2xl:text-4xl mb-5 font-semibold row-start-2'>Add Candidate</h1>
-                <button className='justify-self-end col-start-2' onClick={() => closeModal(false)}><i class="fa-regular fa-circle-xmark text-3xl hover:text-color-red duration-300 transition-all md:text-4xl 2xl:text-5xl"></i></button>
+                <button className='justify-self-end col-start-2' onClick={() => closeModal(false)}><i className="fa-regular fa-circle-xmark text-3xl hover:text-color-red duration-300 transition-all md:text-4xl 2xl:text-5xl"></i></button>
             </div>
-            <Text first_name={true} setFirstName={setFirstName}/>
-            <Text last_name={true} setLastName={setLastName} />
+            <Text name={true} setName={setName}/>
             <Text partylist={true} setPartylist={setPartylist}/>
             <Text introduction={true} setIntroduction={setIntroduction}/>
             <Text awards={true} setAwards={setAwards}/>

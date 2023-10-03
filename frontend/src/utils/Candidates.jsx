@@ -55,7 +55,36 @@ export function CandidateProvider({ children }) {
     }
   }
 
-  console.log(status);
+  async function addCandidate(name, partylist, introduction, candidateRole, awards,platforms) {
+    try{
+       const response = await fetch("http://localhost:8080/api/v1/candidate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          partylist: partylist,
+          introduction: introduction,
+          candidateRole: candidateRole,
+          awards: awards,
+          platforms: platforms,
+        }),
+      })
+
+      if(response.ok){
+        const candidateData = await response.json();
+        console.log(candidateData);
+        console.log('asda')
+      }else{
+        console.log("Server failed to respond");
+      }
+
+    }catch(error){
+      console.log(error);
+      console.log('asda')
+    }
+  }
 
   async function getCandidateById(id) {
     try {
@@ -114,6 +143,7 @@ export function CandidateProvider({ children }) {
     candidates,
     currentCandidate,
     getCandidates,
+    addCandidate,
     getCandidateById,
     removeCandidateById,
     isError,
