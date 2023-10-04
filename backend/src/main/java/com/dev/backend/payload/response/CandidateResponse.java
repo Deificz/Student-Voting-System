@@ -5,6 +5,7 @@ import java.util.List;
 public class CandidateResponse {
     private Long id;
     private String name;
+    private String image;
     private String partylist;
     private Long roleId;
     private String rolename;
@@ -18,9 +19,10 @@ public class CandidateResponse {
     public CandidateResponse() {
     }
 
-    public CandidateResponse(Long id, String name, String partylist, Long roleId, String rolename, String introduction, List<String> awards, List<String> platforms, int voteCount) {
+    public CandidateResponse(Long id, String name, String image, String partylist, Long roleId, String rolename, String introduction, List<String> awards, List<String> platforms, int voteCount) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.partylist = partylist;
         this.roleId = roleId;
         this.rolename = rolename;
@@ -44,6 +46,14 @@ public class CandidateResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPartylist() {
