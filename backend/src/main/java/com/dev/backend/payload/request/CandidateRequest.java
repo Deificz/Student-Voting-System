@@ -5,6 +5,8 @@ import java.util.List;
 public class CandidateRequest {
     private String name;
 
+    private String image;
+
     private Long partylist;
 
     private String introduction;
@@ -22,6 +24,14 @@ public class CandidateRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getPartylist() {
