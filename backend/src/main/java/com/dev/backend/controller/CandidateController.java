@@ -42,6 +42,7 @@ public class CandidateController {
                 .map(candidate -> new CandidateResponse(
                         candidate.getId(),
                         candidate.getName(),
+                        candidate.getImage(),
                         candidate.getPartylist().getPartylistName(),
                         candidate.getCandidateRole().getId(),
                         candidate.getCandidateRole().getRoleName(),
@@ -67,6 +68,7 @@ public class CandidateController {
                 candidateRequest.getIntroduction(),
                 candidateRole.get()
         );
+        candidate.setImage("https://randomuser.me/api/portraits/lego/1.jpg");
         candidate.setAwards(candidateRequest.getAwards());
         candidate.setPlatforms(candidateRequest.getPlatforms());
         candidateRepository.save(candidate);
@@ -83,6 +85,7 @@ public class CandidateController {
             return ResponseEntity.ok().body(new CandidateResponse(
                     candidate.get().getId(),
                     candidate.get().getName(),
+                    candidate.get().getImage(),
                     partyList.getPartylistName(),
                     candidate.get().getCandidateRole().getId(),
                     candidateRole.getRoleName(),

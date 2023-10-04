@@ -15,6 +15,10 @@ public class Candidate {
     @NotBlank
     private String name;
 
+    @NotBlank
+    @Size(max = 500)
+    private String image;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "partylist_id", referencedColumnName = "id")
     private PartyList partylist;
@@ -61,6 +65,14 @@ public class Candidate {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public PartyList getPartylist() {
