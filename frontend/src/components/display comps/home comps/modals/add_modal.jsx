@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Text from "../../form comps/candidate/add_input";
-import { useCandidates } from "../../../utils/Candidates";
+import Text from "../../../form comps/candidate/add_input";
+import { useCandidates } from "../../../../utils/Candidates";
 export default function add_modal({ closeModal, position, setCandidates }) {
   const { addCandidate, getCandidates } = useCandidates();
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCandidates } from "../../../utils/Candidates";
 import { Link } from "react-router-dom";
-import Modal from "./add_modal";
+import Modal from "./modals/add_modal";
 
 export default function candidate_card({ position }) {
   const { getCandidates, status, removeCandidateById } = useCandidates();
@@ -64,9 +64,9 @@ export default function candidate_card({ position }) {
                   </button>
                 )}
                 <div className="flex items-center">
-                  <div className="h-[80px] w-[80px] bg-black rounded-full text-white flex justify-center items-center">
-                    Logo
-                  </div>
+                  
+                  <img src={candidate.image} className="h-[80px] w-[80px] bg-black rounded-full text-white flex justify-center items-center"/>   
+                 
                   <h1 className="ml-5 font-semibold text-md md:text-xl 2xl:text-3xl">
                     {candidate.name}{" "}
                     <span className="text-xs md:text-md 2xl:text-xl">

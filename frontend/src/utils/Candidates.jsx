@@ -85,6 +85,36 @@ export function CandidateProvider({ children }) {
     }
   }
 
+  async function updateCandidate(id,name, partylist, introduction, candidateRole, awards,platforms) {
+    try{
+       const response = await fetch(`http://localhost:8080/api/v1/candidate/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          partylist: partylist,
+          introduction: introduction,
+          candidateRole: candidateRole,
+          awards: awards,
+          platforms: platforms,
+        }),
+      })
+
+      if(response.ok){
+        const candidateData = await response.json();
+        console.log(candidateData);
+      }else{
+        console.log("Server failed to respond");
+      }
+
+    }catch(error){
+      console.log(error);
+      console.log('Failed to fetch')
+    }
+  }
+
   async function getCandidateById(id) {
     try {
       const response = await fetch(
@@ -143,6 +173,7 @@ export function CandidateProvider({ children }) {
     currentCandidate,
     getCandidates,
     addCandidate,
+    updateCandidate,
     getCandidateById,
     removeCandidateById,
     isError,

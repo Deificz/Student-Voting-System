@@ -35,7 +35,7 @@ export default function vote_done({ userVotes, userName }) {
               <h2 className="font-semibold md:text-2xl 2xl:text-4xl">{candidate.rolename}</h2>
               <h1 className="text-xl font-bold md:text-3xl text-color-blue 2xl:text-5xl 2xl:mt-3">{candidate.name}</h1>
             </div>
-          ))}
+          )).sort((a,b) => a.id - b.id)}
         </div>
       </div>
     </div>

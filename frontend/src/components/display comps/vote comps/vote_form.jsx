@@ -49,7 +49,7 @@ export default function vote_form() {
   const [auditor, setAuditor] = useState({});
   const [pro, setPRO] = useState({});
 
-
+  
   useEffect(() => {
     getCandidates();
     dispatch({ type: ACTIONS.SET_USER_ID, payload: user.id });
