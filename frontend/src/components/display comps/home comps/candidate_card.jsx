@@ -53,7 +53,7 @@ export default function candidate_card({ position }) {
 
       <div
         id="candidate-panel"
-        className="flex flex-wrap md:overflow-y-auto justify-evenly w-full"
+        className="flex flex-wrap px-4 md:overflow-y-auto justify-evenly w-full"
       >
         {status === 'Done' ?
           candidates
