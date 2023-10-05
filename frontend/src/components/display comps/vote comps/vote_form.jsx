@@ -62,7 +62,7 @@ export default function vote_form() {
   useEffect(() => {
     if (isOk === true) {
       setVote(voteData);
-      window.location.reload();
+      setTimeout(() => window.location.reload(),5);
     }
   }, [isOk]);
 

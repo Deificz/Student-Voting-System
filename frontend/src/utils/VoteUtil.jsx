@@ -40,7 +40,7 @@ export function VoteUtilProvider({ children }) {
       if (response.ok) {
         const responseData = await response.json();
         dispatch({ type: ACTIONS.SET_USERVOTE, payload: responseData });
-
+        console.log(responseData);
       } else console.log("Failed to set");
     } catch {
       console.log("Failed to respond");
