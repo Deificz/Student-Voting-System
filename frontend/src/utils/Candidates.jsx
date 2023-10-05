@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const ACTIONS = {
-  SET_LOADING: "set_loading",
+  SET_STATUS: "set_loading",
   SET_ERROR: "set_error",
   LOAD_CANDIDATE: "load_candidate",
   SET_CURRENT_CANDIDATE: `set_current_candidate`,
@@ -17,7 +17,7 @@ const ACTIONS = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case ACTIONS.SET_LOADING:
+    case ACTIONS.SET_STATUS:
       return { ...state, status: action.payload };
     case ACTIONS.SET_ERROR:
       return { ...state, isError: true };
@@ -37,15 +37,15 @@ export function CandidateProvider({ children }) {
   async function getCandidates() {
     try {
       const response = await fetch("http://localhost:8080/api/v1/candidate");
-      dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
+      dispatch({ type: ACTIONS.SET_STATUS, payload: "Loading" });
       if (response.ok) {
         
         const candidateData = await response.json();
         localStorage.setItem("Candidates", JSON.stringify(candidateData));
         dispatch({ type: ACTIONS.LOAD_CANDIDATE, payload: candidateData });
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Done" });
       } else {
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Error" });
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Error" });
 
         console.log("Failed to execute");
       }
@@ -73,8 +73,10 @@ export function CandidateProvider({ children }) {
       })
 
       if(response.ok){
+        dispatch({type: ACTIONS.SET_STATUS, payload:"Loading"});
         const candidateData = await response.json();
         console.log(candidateData);
+        dispatch({type: ACTIONS.SET_STATUS, payload:"Done"});
       }else{
         console.log("Server failed to respond");
       }
@@ -103,8 +105,8 @@ export function CandidateProvider({ children }) {
       })
 
       if(response.ok){
-        const candidateData = await response.json();
-        console.log(candidateData);
+        dispatch({type: ACTIONS.SET_STATUS, payload:"Loading"});
+        dispatch({type: ACTIONS.SET_STATUS, payload:"Done"});
       }else{
         console.log("Server failed to respond");
       }
@@ -112,32 +114,6 @@ export function CandidateProvider({ children }) {
     }catch(error){
       console.log(error);
       console.log('Failed to fetch')
-    }
-  }
-
-  async function getCandidateById(id) {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/candidate/${id}`
-      );
-
-      if (response.ok) {
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
-        const candidateData = await response.json();
-        localStorage.setItem("currentCandidate", JSON.stringify(candidateData));
-        dispatch({
-          type: ACTIONS.SET_CURRENT_CANDIDATE,
-          payload: candidateData,
-        });
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
-      } else {
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Error" });
-
-        console.log("Failed to execute");
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch({ type: ACTIONS.SET_ERROR });
     }
   }
 
@@ -154,10 +130,10 @@ export function CandidateProvider({ children }) {
       );
       
       if(response.ok){
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Loading" });
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Loading" });
         const responseData = await response.json();
         console.log(responseData);
-        dispatch({ type: ACTIONS.SET_LOADING, payload: "Done" });
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Done" });
       }else{
         dispatch({type: ACTIONS.SET_ERROR, payload: "Server failed to respond"});
         console.log("Server did not respond: Failed to delete");
@@ -165,6 +141,32 @@ export function CandidateProvider({ children }) {
     } catch {
       dispatch({type: ACTIONS.SET_ERROR, payload: "Error"});
       console.log("Failed to delete");
+    }
+  }
+
+  async function getCandidateById(id) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/candidate/${id}`
+      );
+
+      if (response.ok) {
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Loading" });
+        const candidateData = await response.json();
+        localStorage.setItem("currentCandidate", JSON.stringify(candidateData));
+        dispatch({
+          type: ACTIONS.SET_CURRENT_CANDIDATE,
+          payload: candidateData,
+        });
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Done" });
+      } else {
+        dispatch({ type: ACTIONS.SET_STATUS, payload: "Error" });
+
+        console.log("Failed to execute");
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: ACTIONS.SET_ERROR });
     }
   }
 

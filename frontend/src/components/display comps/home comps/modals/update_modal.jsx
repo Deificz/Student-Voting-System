@@ -4,7 +4,7 @@ import { useCandidates } from "../../../../utils/Candidates";
 export default function add_modal({ closeModal, setCandidates, currentCandidate }) {
 
   //For utilities
-  const { updateCandidate, getCandidates } = useCandidates();
+  const { updateCandidate, getCandidates, getCandidateById } = useCandidates();
 
   //Field variables
   const [name, setName] = useState("");
@@ -27,13 +27,15 @@ export default function add_modal({ closeModal, setCandidates, currentCandidate 
         platforms
       );
       await getCandidates();
-      setCandidates(JSON.parse(localStorage.getItem("Candidates")));
+      await setCandidates(JSON.parse(localStorage.getItem("Candidates")));
+      await getCandidateById(currentCandidate.id);
       closeModal(false);
     } catch (error) {
       console.log(error);
     }
   };
 
+  console.log()
   return (
     <dialog className="z-20 flex items-center justify-center w-full h-full bg-black bg-opacity-70">
       <form

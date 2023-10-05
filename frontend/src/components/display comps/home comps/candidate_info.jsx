@@ -5,28 +5,25 @@ import Modal from "./modals/update_modal";
 import { SidebarContext } from "../../../utils/Contexts.jsx";
 
 export default function candidate_info() {
-
   //Loads candidates and the specific candidate
   const { getCandidateById, status } = useCandidates();
-  const [currentCandidate, setCurrentCandidate] = useState();
-
-  //For utilities
-  const [isDone, setIsDone] = useState(false);
-  const { id } = useParams();
-  const [openModal, setOpenModal] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
+  const [currentCandidate, setCurrentCandidate] = useState(
+    JSON.parse(localStorage.getItem("currentCandidate"))
+  );
   const [candidates, setCandidates] = useState(
     JSON.parse(localStorage.getItem("Candidates"))
   );
-  const { currentPosView } = useContext(SidebarContext);
+
+  //For utilities
+  const { id } = useParams();
+  const [openModal, setOpenModal] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   //Check if the user is an admin
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [role] = userData.roles;
     const boolAdmin = role === "ROLE_ADMIN";
-
     setIsAdmin(boolAdmin);
   }, []);
 
@@ -35,15 +32,14 @@ export default function candidate_info() {
     getCandidateById(id);
   }, []);
 
-  //Status checking
   useEffect(() => {
-    status === "Done" ? setIsDone(true) : setIsDone(false);
-    setCurrentCandidate(JSON.parse(localStorage.getItem("currentCandidate")));
-  }, [status]);
-
+    setCurrentCandidate(JSON.parse(localStorage.getItem("currentCandidate")))
+  },[status]);
+  
+  console.log(status);
   return (
     <>
-      {isDone ? (
+      {status === "Done" ? (
         <div
           id="candidate-panel"
           className="flex flex-col items-center w-[100dvw] h-[100dvh] px-5 pt-10 md:overflow-y-scroll"
@@ -87,18 +83,26 @@ export default function candidate_info() {
               Awards
             </h3>
             {currentCandidate.awards.map((award) => (
-              <p className="md:text-lg 2xl:text-3xl">{`• ${award}`}</p>
+              <p
+                key={currentCandidate.id}
+                className="md:text-lg 2xl:text-3xl"
+              >{`• ${award}`}</p>
             ))}
             <h3 className="mt-5 mb-5 font-bold mttext-xl md:text-xl 2xl:text-4xl">
               Platforms
             </h3>
             {currentCandidate.platforms.map((platform) => (
-              <p className="md:text-lg 2xl:text-3xl">{`• ${platform}`}</p>
+              <p
+                key={currentCandidate.id}
+                className="md:text-lg 2xl:text-3xl"
+              >{`• ${platform}`}</p>
             ))}
           </div>
         </div>
-      ) : (
+      ) : status === "Loading" ? (
         <h1>Loading</h1>
+      ) : (
+        ""
       )}
       {openModal && (
         <Modal
