@@ -35,13 +35,16 @@ const reducer = (state, action) => {
 };
 
 export default function vote_form() {
+  //Initialized utilities
   const { setVote } = useVoteUtil();
   const [{ voteData }, dispatch] = useReducer(reducer, initialState);
 
+  //Captures candidates and userData
   const user = JSON.parse(localStorage.getItem("userData"));
   const { candidates, getCandidates, status } = useCandidates();
   const [isOk, setIsOk] = useState(false);
 
+  //Declarations for voted positions
   const [president, setPresident] = useState({});
   const [vicePresident, setVicePresident] = useState({});
   const [secretary, setSecretary] = useState({});
@@ -49,12 +52,13 @@ export default function vote_form() {
   const [auditor, setAuditor] = useState({});
   const [pro, setPRO] = useState({});
 
-  
+  //Loads candidates
   useEffect(() => {
     getCandidates();
     dispatch({ type: ACTIONS.SET_USER_ID, payload: user.id });
   }, []);
 
+  //If user votes then sets the votes to backend
   useEffect(() => {
     if (isOk === true) {
       setVote(voteData);
@@ -62,10 +66,10 @@ export default function vote_form() {
     }
   }, [isOk]);
 
+  //Stores the value from the field to the variables
   const handlePresident = (e) => {
     setPresident(Number(e.target.value));
   };
-
   const handleVicePresident = (e) => {
     setVicePresident(Number(e.target.value));
   };
@@ -82,7 +86,7 @@ export default function vote_form() {
     setPRO(Number(e.target.value));
   };
  
-
+  //Submits the chosen candidates
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: ACTIONS.SET_VOTE, payload: president });

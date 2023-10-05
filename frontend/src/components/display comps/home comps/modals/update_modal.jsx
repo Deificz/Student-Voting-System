@@ -3,15 +3,17 @@ import Text from "../../../form comps/candidate/add_input";
 import { useCandidates } from "../../../../utils/Candidates";
 export default function add_modal({ closeModal, setCandidates, currentCandidate }) {
 
+  //For utilities
   const { updateCandidate, getCandidates } = useCandidates();
 
+  //Field variables
   const [name, setName] = useState("");
   const [partylist, setPartylist] = useState(null);
   const [introduction, setIntroduction] = useState("");
   const [awards, setAwards] = useState([]);
   const [platforms, setPlatforms] = useState([]);
   
-  
+  //Updates the candidate
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();

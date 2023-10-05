@@ -6,6 +6,8 @@ export default function sidebar() {
   const { setCurrentPosView } = useContext(SidebarContext);
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  //Positions to display
   const data = [
     { id: 1, title: "President" },
     { id: 2, title: "V. President" },
@@ -14,10 +16,14 @@ export default function sidebar() {
     { id: 5, title: "Auditor" },
     { id: 6, title: "P.R.O" },
   ];
+
+  //Change position display
   const handleClick = (e) => {
     setCurrentPosView(e.target.textContent);
     setSearchParams({ position: e.target.textContent });
   };
+
+  //Opens the sidebar
   const handleOpenSide = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };

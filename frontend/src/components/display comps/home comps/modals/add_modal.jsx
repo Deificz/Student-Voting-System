@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Text from "../../../form comps/candidate/add_input";
 import { useCandidates } from "../../../../utils/Candidates";
 export default function add_modal({ closeModal, position, setCandidates }) {
+
+  //For utilities
   const { addCandidate, getCandidates } = useCandidates();
 
+  //Field variables
   const [name, setName] = useState("");
   const [partylist, setPartylist] = useState(null);
   const [introduction, setIntroduction] = useState("");
@@ -11,7 +14,7 @@ export default function add_modal({ closeModal, position, setCandidates }) {
   const [awards, setAwards] = useState([]);
   const [platforms, setPlatforms] = useState([]);
 
-  console.log(partylist);
+  //Checks the current position
   useEffect(() => {
     position === "President"
       ? setRole(1)
@@ -28,6 +31,7 @@ export default function add_modal({ closeModal, position, setCandidates }) {
       : "";
   }, []);
 
+  //Adds the candidate
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();

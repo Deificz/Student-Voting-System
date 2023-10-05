@@ -3,10 +3,12 @@ export default function vote_done({ userVotes, userName }) {
   const [candidates, setCandidates] = useState(null);
   const [candidateList, setCandidateList] = useState([]);
 
+  //Loads candidates
   useEffect(() => {
     setCandidates(JSON.parse(localStorage.getItem("Candidates")));
   }, []);
 
+  //Filters the candidates that the user only voted
   useEffect(() => {
     if (candidates !== null) {
       const filteredList = candidates.filter((candidate) =>

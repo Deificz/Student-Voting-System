@@ -4,14 +4,18 @@ import { Link } from "react-router-dom";
 import Modal from "./modals/add_modal";
 
 export default function candidate_card({ position }) {
+
+  //For utilities
   const { getCandidates, status, removeCandidateById } = useCandidates();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  //Loads the candidate
   const [candidates, setCandidates] = useState(
     JSON.parse(localStorage.getItem("Candidates"))
   );
 
-  const [openModal, setOpenModal] = useState(false);
-
+  //Check if the user is an admin
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [role] = userData.roles;
@@ -20,6 +24,7 @@ export default function candidate_card({ position }) {
     setIsAdmin(boolAdmin);
   }, []);
 
+  //Deletes the candidate
   const handleDelete = async (id) => {
     try{
       await removeCandidateById(id);

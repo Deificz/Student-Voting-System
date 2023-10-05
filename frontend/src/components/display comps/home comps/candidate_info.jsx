@@ -5,17 +5,23 @@ import Modal from "./modals/update_modal";
 import { SidebarContext } from "../../../utils/Contexts.jsx";
 
 export default function candidate_info() {
+
+  //Loads candidates and the specific candidate
   const { getCandidateById, status } = useCandidates();
   const [currentCandidate, setCurrentCandidate] = useState();
+
+  //For utilities
   const [isDone, setIsDone] = useState(false);
   const { id } = useParams();
   const [openModal, setOpenModal] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
   const [candidates, setCandidates] = useState(
     JSON.parse(localStorage.getItem("Candidates"))
   );
   const { currentPosView } = useContext(SidebarContext);
 
+  //Check if the user is an admin
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [role] = userData.roles;
@@ -24,10 +30,12 @@ export default function candidate_info() {
     setIsAdmin(boolAdmin);
   }, []);
 
+  //Finds the candidate with its id
   useEffect(() => {
     getCandidateById(id);
   }, []);
 
+  //Status checking
   useEffect(() => {
     status === "Done" ? setIsDone(true) : setIsDone(false);
     setCurrentCandidate(JSON.parse(localStorage.getItem("currentCandidate")));

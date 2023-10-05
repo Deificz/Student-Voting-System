@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function main_vote() {
   const { userVotes, setUserVotes } = useVoteUtil();
   const [userName, setUserName] = useState(null);
- 
+  
+  //Capture user name and id
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     setUserName(userData.firstname);

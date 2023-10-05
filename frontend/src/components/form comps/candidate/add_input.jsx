@@ -13,7 +13,10 @@ export default function add_input({
   setAwards,
   setPlatforms,
 }) {
+  //Form empty field validation
   const [isEmpty, setIsEmpty] = useState(true);
+
+  //Partylists
   const partylists = [
     { id: 1, title: "Progressive Alliance" },
     { id: 2, title: "Unity Party" },
@@ -21,6 +24,8 @@ export default function add_input({
     { id: 4, title: "Innovation Forward" },
     { id: 5, title: "Equality for All" },
   ];
+
+  //Sets the inputs to the variable
   const handleInput = (e) => {
     if (e.target.value) setIsEmpty(false);
     else setIsEmpty(true);
