@@ -13,7 +13,7 @@ export default function Register() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup, isRegistered } = useAuth();
+  const { signup, isRegistered, register_status } = useAuth();
 
   const navigate = useNavigate();
 
@@ -45,6 +45,13 @@ export default function Register() {
           <Text last_name={true} setLastName={setLastName} />
           <Email setEmail={setEmail} />
           <Password setPassword={setPassword} />
+          <h1
+            className={`text-color-red font-bold ${
+              register_status === 'Error' ? "visible" : "invisible"
+            } md:text-xl 2xl:text-2xl`}
+          >
+            Student number is already registered or the email has already been used.
+          </h1>
           <button
             type="submit"
             onSubmit={() => navigate("/option")}

@@ -4,7 +4,8 @@ import { AuthContext } from "./Contexts";
 const initialState = {
   user: null,
   isAuthenticated: false,
-  login_error: false,
+  login_status: '',
+  register_status: '',
   isRegistered: false,
 };
 
@@ -12,7 +13,8 @@ const ACTIONS = {
   LOGIN: 'login',
   LOGOUT: 'logout',
   REGISTER: 'register',
-  LOGIN_ERROR: 'login_error'
+  LOGIN_STATUS: 'login_status',
+  REGISTER_STATUS: 'register_status'
 }
 
 function reducer(state, action) {
@@ -23,8 +25,10 @@ function reducer(state, action) {
       return { ...state, user: null, isAuthenticated: false };
     case ACTIONS.REGISTER:
       return { ...state, user: action.payload, isAuthenticated: false, isRegistered:true };
-    case ACTIONS.LOGIN_ERROR:
-      return {...state, login_error: true}
+    case ACTIONS.LOGIN_STATUS:
+      return {...state, login_status: action.payload};
+    case ACTIONS.REGISTER_STATUS:
+        return {...state, register_status: action.payload}
     default:
       throw new Error("Unknown action");
   }
@@ -32,7 +36,7 @@ function reducer(state, action) {
 
 function AuthProvider({ children }) {
   
-  const [{ user, isAuthenticated, login_error, isRegistered }, dispatch] = useReducer(
+  const [{ user, isAuthenticated, login_status, register_status, isRegistered }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -56,10 +60,14 @@ function AuthProvider({ children }) {
         console.log("Login successful");
         dispatch({ type: ACTIONS.LOGIN, payload: responseData});
         localStorage.setItem('userData', JSON.stringify(responseData));
-      } else  dispatch({type: ACTIONS.LOGIN_ERROR})
+        dispatch({type: ACTIONS.LOGIN_STATUS, payload: 'Success'});
+      } else {
+        dispatch({type: ACTIONS.LOGIN_STATUS, payload: 'Error'});
+        setTimeout(() => dispatch({type: ACTIONS.LOGIN_STATUS, payload: 'Retry'}),4000);
+      }
 
     } catch {
-      dispatch({type: ACTIONS.LOGIN_ERROR})
+      console.log("Log in is aborted");
     }
   }
 
@@ -91,7 +99,11 @@ function AuthProvider({ children }) {
         console.log(responseData);
         console.log("Register successful");
         dispatch({ type: ACTIONS.REGISTER, payload: responseData });
-      } else console.log("Registration is aborted");
+        dispatch({type: ACTIONS.REGISTER_STATUS, payload: 'Success'});
+      } else {
+        dispatch({type: ACTIONS.REGISTER_STATUS, payload: 'Error'});
+        setTimeout(() => dispatch({type: ACTIONS.REGISTER_STATUS, payload: 'Retry'}),4500);
+      }
     } catch {
       console.log("Registration is aborted");
     }
@@ -123,7 +135,8 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user,
-        login_error,
+        login_status,
+        register_status,
         isRegistered,
         isAuthenticated,
         login,

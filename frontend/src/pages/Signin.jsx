@@ -8,7 +8,7 @@ export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login, isAuthenticated, login_error } = useAuth();
+  const { login, isAuthenticated, login_status } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +22,7 @@ export default function Signin() {
     },
     [isAuthenticated, navigate]
   );
+
   return (
     <>
       <Header />
@@ -32,16 +33,16 @@ export default function Signin() {
         <form
           action=""
           onSubmit={handleSubmit}
-          className="flex flex-col items-center  justify-evenly items w-fit md:h-[60dvh] h-fit  border-color-blue border-4 p-6 md:p-10 2xl:p-14 rounded-xl shadow-card"
+          className="flex flex-col items-center  justify-evenly items w-fit  h-fit  border-color-blue border-4 p-6 md:p-10 2xl:p-14 rounded-xl shadow-card"
         >
           <Email setEmail={setEmail} />
           <Password setPassword={setPassword} />
           <h1
-            className={`text-color-red ${
-              login_error ? "visible" : "invisible"
-            }`}
+            className={`text-color-red font-bold my-3 ${
+              login_status === "Error" ? "visible" : "invisible"
+            }  md:text-xl 2xl:text-2xl`}
           >
-            User doesn't exist. Please try again!
+            User doesn't exist. Check the email and password if they're correct.
           </h1>
           <button className="col-start-2 row-start-6 px-16 py-5 mt-5 text-xl font-semibold text-white transition-all duration-300 border-2 rounded-lg bg-color-blue 2xl:p-8 2xl:text-3xl shadow-button hover:bg-white hover:text-color-blue border-color-blue">
             Sign-in
