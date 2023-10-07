@@ -70,7 +70,7 @@ export default function candidate_info() {
                 onClick={() => setOpenModal(true)}
                 className="self-end mb-5 font-semibold text-green-700 transition-all duration-200 hover:text-green-500"
               >
-                <i className="text-5xl fa-solid fa-pen-to-square"></i>
+                <i className="text-4xl md:text-5xl fa-solid fa-pen-to-square"></i>
               </button>
             )}
             <h3 className="mb-5 text-xl font-bold md:text-xl 2xl:text-4xl">

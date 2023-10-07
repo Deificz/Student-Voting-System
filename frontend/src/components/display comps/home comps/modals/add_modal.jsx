@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Text from "../../../form comps/candidate/add_input";
 import { useCandidates } from "../../../../utils/Candidates";
-export default function add_modal({ closeModal, position, setCandidates }) {
+export default function add_modal({ setOpenAddModal, position, setCandidates }) {
 
   //For utilities
   const { addCandidate, getCandidates } = useCandidates();
@@ -45,7 +45,7 @@ export default function add_modal({ closeModal, position, setCandidates }) {
       );
       await getCandidates();
       setCandidates(JSON.parse(localStorage.getItem("Candidates")));
-      closeModal(false);
+      setOpenAddModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +65,7 @@ export default function add_modal({ closeModal, position, setCandidates }) {
           </h1>
           <button
             className="col-start-2 justify-self-end"
-            onClick={() => closeModal(false)}
+            onClick={() => setOpenAddModal(false)}
           >
             <i className="text-3xl transition-all duration-300 fa-regular fa-circle-xmark hover:text-color-red md:text-4xl 2xl:text-5xl"></i>
           </button>

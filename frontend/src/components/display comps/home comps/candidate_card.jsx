@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useCandidates } from "../../../utils/Candidates";
 import { Link } from "react-router-dom";
-import Modal from "./modals/add_modal";
-
+import AddModal from "./modals/add_modal";
+import DeleteModal from "./modals/delete_modal";
 export default function candidate_card({ position }) {
 
   //For utilities
-  const { getCandidates, status, removeCandidateById } = useCandidates();
+  const { status } = useCandidates();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openDeleteModal, setOpenDelModal] = useState(false);
+ 
   //Loads the candidate
   const [candidates, setCandidates] = useState(
     JSON.parse(localStorage.getItem("Candidates"))
   );
-
+  const [currentId, setId] = useState(null);
+  
+  const handleDeleteBtn = (id) => {
+    setOpenDelModal(true);
+    setId(id);
+  }
   //Check if the user is an admin
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -23,18 +29,6 @@ export default function candidate_card({ position }) {
 
     setIsAdmin(boolAdmin);
   }, []);
-
-  //Deletes the candidate
-  const handleDelete = async (id) => {
-    try{
-      await removeCandidateById(id);
-      await getCandidates();
-      setCandidates(JSON.parse(localStorage.getItem("Candidates")));
-    }catch(error){
-      console.error(error);
-    }
-   
-  }
 
   return (
     <div className="w-[100dvw] h-[100dvh] flex flex-col items-center">
@@ -45,7 +39,7 @@ export default function candidate_card({ position }) {
       >
         <h1>{position}</h1>
         {isAdmin && (
-          <button onClick={() => setOpenModal(true)}>
+          <button onClick={() => setOpenAddModal(true)}>
             <i className="p-3 mt-5  text-black transition-all duration-300 bg-white border-4 rounded-full fa-solid fa-plus hover:text-white hover:bg-color-green hover:border-color-green border-color-green"></i>
           </button>
         )}
@@ -64,7 +58,7 @@ export default function candidate_card({ position }) {
                 className="flex flex-col mr-5 justify-between h-[350px] w-[230px] md:w-[300px] md:h-[400px] 2xl:w-[400px] 2xl:h-[450px] border-2 my-10 border-color-blue rounded-xl shadow-card hover:-translate-y-3 transition-all duration-300 px-2 py-4"
               >
                 {isAdmin && (
-                  <button onClick={() => handleDelete(candidate.id)} className="self-end w-10 min-h-10 mr-3 text-gray-200 transition-all duration-300 border-4 border-white rounded-full bg-color-red hover:text-black hover:bg-white hover:border-color-red" >
+                  <button onClick={() => handleDeleteBtn(candidate.id) } className="self-end w-10 min-h-10 mr-3 text-gray-200 transition-all duration-300 border-4 border-white rounded-full bg-color-red hover:text-black hover:bg-white hover:border-color-red" >
                     <i className="fa-solid fa-minus"></i>
                   </button>
                 )}
@@ -92,7 +86,8 @@ export default function candidate_card({ position }) {
             )) : <h1>Loading..</h1>}
         </div>
         
-        {openModal && <Modal closeModal={setOpenModal} position={position} setCandidates={setCandidates}/>}
+        {openAddModal && <AddModal setOpenAddModal={setOpenAddModal} position={position} setCandidates={setCandidates}/>}
+        {openDeleteModal && <DeleteModal setOpenDelModal={setOpenDelModal} currentId={currentId} setCandidates={setCandidates} />}
     </div>
     
   );
