@@ -53,17 +53,25 @@ $ npm run dev
 ## Guide for the backend
  
 Go to the projects folder and you will see backend and frontend folder
+
 Open the backend folder in your idea preferably IntelliJ IDEA Community Edition
+
 Before running the backend, please make sure that you already have MySQL Server installed in your machine. You can also install MySQL Workbench to easily access databases
+
 In your MySQL, create a schema "voting_system"
+
 From the backend folder, navigate to src > main > resources. Open the file application. properties in a text editor
+
 Please edit the following based in your MySQL configuration
 spring.datasource.username=<username>
 spring.datasource.password=<password>
  
 Once done, run the backend by running the command "./mvnw spring-boot:run"
+
 Once backend has completely started without errors, open your MySQL Workbench and open the SQL files located in same directory as the application.properties
+
 Open the init.sql and data.sql file in your workbench
+
 Execute the init.sql file first before executing data.sql
 
 Note: This guide assumed that you already have node.js and git version control already installed in your machine. Latest version is recommended. 
