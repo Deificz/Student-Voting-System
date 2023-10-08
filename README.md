@@ -79,4 +79,8 @@ Note: This guide assumed that you already have node.js and git version control a
 
 # Demo
 
-https://github.com/Deificz/Student-Voting-System/assets/99456747/f6fc49fb-1169-4d33-a45a-a76eba597591
+
+
+https://github.com/Deificz/Student-Voting-System/assets/99456747/b1da4ae9-03e3-47cf-b54b-c78ea8294ff1
+
+
